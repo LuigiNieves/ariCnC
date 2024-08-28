@@ -63,12 +63,17 @@ function registry(){
 
 
   if(!validarUsuario(userName)){
-    alert('El usuario no es valido')
+    alert('El usuario no es valido \n(Entre 8 y 15 caracteres, sin espacios, no numeros, no caracteres especiales)')
+    return
+  }
+
+  if (userPassword !== userVPassword){
+    alert('Las contraseñas no coinciden')
     return
   }
 
   if(!validarContrasena(userPassword)){
-    alert('La contraseña no es valida')
+    alert('La contraseña no es valida \n(Mayus, entre 12 y 20 caracteres, Minus, Numero y caracter @$!/%*?&)')
     return
   }
 
@@ -76,6 +81,7 @@ function registry(){
     alert('El correo debe ser de la forma xxx@xxxx.xx')
     return
   }
+
 
   const database = JSON.parse(localStorage.getItem('database'))
 
@@ -94,13 +100,10 @@ function registry(){
   database.push(newUser)
 
   localStorage.setItem('database',JSON.stringify(database));
+
+  localStorage.setItem('userName',userName.toLowerCase())
   window.location.href ='home.html';
 
-}
-
-
-{
-  luigi : 'Iphone777'
 }
 
 
