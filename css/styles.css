@@ -17,11 +17,32 @@ body{
 }
 
 header{
+  width: 100%;
+  display: flex;
+  align-items: center;
   background-color: #00BF63;
   color: #fff;
   text-align: center;
   padding: 20px
 }
+.header-content {
+  display: flex;
+  align-items: center; /* Alinea verticalmente la imagen y el texto */
+  width: 100%;
+  max-width: 850px; /* Ajusta el ancho máximo si es necesario */
+  justify-content: space-between; /* Distribuye espacio entre imagen y texto */
+}
+
+.logo {
+  width: 100px; /* Ajusta el tamaño según tus necesidades */
+  height: auto;
+}
+
+h1 {
+  text-align: center;
+  margin: 0; /* Elimina márgenes predeterminados */
+}
+
 
 
 
