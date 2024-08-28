@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,25 +8,27 @@
 
   <link rel="stylesheet" href="../css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
 </head>
+
 <body>
-  
-  <header>    
-    <!-- <section id="main-logo">
-      <h1>InstaPIC</h1>
-    </section> -->
+
+  <header>
+
     <nav>
       <ul>
-        <li>InstaPic</li>
-        <li><a href="">Inicio</a></li>
-        <li><a href="">Mi Perfil</a></li>
-        <li><a href="">Buscar</a></li>
-        <li><a href="">subir fotos</a></li>
-        <li><a href="">editar perfil</a></li>
+        <li><img src="../images/Aircncv.png" alt=""></li>
+        <li><a href="/html/mi-perfil.html">Mi Perfil</a></li>
+        <li><a href="/html/buscar-propiedades.html">Buscar</a></li>
+        <li><a href="/html/mis-reservas.html">Mis Reservas</a></li>
+        <li><a href="/html/notificaciones.html">Notificaciones</a></li>
 
       </ul>
       <div>
+        <div class="profile-user">
+          <img src="/images/luigi.png" alt="">
+          <p id="userName"></p>
+
+        </div>
 
         <li><a href="index.html">Cerrar sesión</a></li>
 
@@ -34,50 +37,90 @@
   </header>
 
   <main>
-      <section id="profile">
-        <div id="foto">
-          <img src="../images/perfil.jpg" >
-          <span>
-            hola juan! 
-          </span>
-        </div>
+    <section class="menu">
 
-        <div id="info">
+      <ul class="short">
+        <li><a href="#"><i class="fas fa-umbrella-beach"></i><span>Frente a la playa</span></a></li>
+        <li><a href="#"><i class="fas fa-igloo"></i></a><span>Casas domo</span></li>
 
-          <div>
-            <span>20</span>
-            <span>seguidores </span>
-          </div>
+        <li><a href="#"><i class="fas fa-swimming-pool"></i><span>Piscinas increibles</span></a></li>
+        <li><a href="#"><i class="fas fa-tree"></i></a><span>Islas</span></li>
+        <li><a href="#"><i class="fas fa-fire-alt"></i></a><span>Populares</span></li>
+      </ul>
 
-          <div>
-            <span>10</span>
-            <span>publicaciones</span>
-          </div>
+    </section>
+    <section class="search-box">
+      <p>En cualquier lugar del mundo</p>
+      <span></span>
+      <p>Por semanas</p>
+      <span></span>
+      <p>¿Cuantos?</p>
+      <i class="fas fa-search"></i>
+    </section>
 
-          <div >
-            <span>200</span>
-            <span>solicitudes</span> 
-          </div>
+    <section id="gallery">
+      <h1>Top 5</h1>
+      <div>
+        <img src="../images/casa6.webp" alt="">
+        <p>Casa en la casa</p>
+        <span>$180.000</span>
+      </div>
+      <div>
+        <img src="../images/casa7.webp" alt="">
+        <p>Casa en la casa</p>
+        <span>$180.000</span>
+      </div>
+      <div>
+        <img src="../images/playa.webp" alt="">
+        <p>Casa en la casa</p>
+        <span>$180.000</span>
+      </div>
+      <div>
+        <img src="../images/playa2.webp" alt="">
+        <p>Casa en la casa</p>
+        <span>$180.000</span>
+      </div>
+      <div>
+        <img src="../images/casa5.webp" alt="">
+        <p>Casa en la casa</p>
+        <span>$180.000</span>
+      </div>
 
-        </div>
 
-      </section>
+    </section>
+
+    <section id="gallery">
+      <h1>Otras propiedades</h1>
+      <div>
+        <img src="../images/casa1.webp" alt="">
+        <p>Casa en la casa</p>
+        <span>$180.000</span>
+      </div>
+      <div>
+        <img src="../images/casa2.webp" alt="">
+        <p>Casa en la casa</p>
+        <span>$180.000</span>
+      </div>
+      <div>
+        <img src="../images/playa.webp" alt="">
+        <p>Casa en la casa</p>
+        <span>$180.000</span>
+      </div>
+      <div>
+        <img src="../images/casa3.webp" alt="">
+        <p>Casa en la casa</p>
+        <span>$180.000</span>
+      </div>
+      <div>
+        <img src="../images/casa4.webp" alt="">
+        <p>Casa en la casa</p>
+        <span>$180.000</span>
+      </div>
 
 
+    </section>
 
-
-      <section id="gallery">
-      
-        <img src="../images/gallery1.jpg" width="16%"  alt="">
-        <img src="../images/gallery2.jpg" width="16%"  alt="">
-        <img src="../images/gallery3.jpg" width="16%"  alt="">
-        <img src="../images/gallery4.jpg" width="16%"  alt="">
-        <img src="../images/gallery1.jpg" width="16%"  alt="">
-        <img src="../images/gallery2.jpg" width="16%"  alt="">
-        <img src="../images/gallery3.jpg" width="16%"  alt="">
-        <img src="../images/gallery4.jpg" width="16%"  alt="">
-      
-      </section>
+  
 
   </main>
 
@@ -91,13 +134,18 @@
     </ul>
 
     <p>
-      &copy; 2024 InstaPic Company
+      &copy; 2024 AirCnC Company
     </p>
-      
+
   </footer>
 
-  <script src="../scripts/scripts.js"></script>
+
+
+  <script defer src="/scripts/home.js"></script>
+
+
 
 
 </body>
+
 </html>
