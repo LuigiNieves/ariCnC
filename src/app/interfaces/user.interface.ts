@@ -1,7 +1,9 @@
 export interface IUSER {
+  id?: string;
   userName: string;
-  password: string;
-  photo?: string;
+  email?: string;
+  password?: string;
+  photo?: string | File;
   bio?: string;
-  owner: boolean;
+  owner?: boolean;
 }

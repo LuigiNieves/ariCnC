@@ -1,20 +1,40 @@
-<!-- <div class="perfil-container">
-  <h2>Perfil de Usuario</h2>
+<div class="profile-container">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="form">
+    <h2>Edit Profile</h2>
 
-  Muestra la imagen de perfil
-  <img *ngIf="imagen" [src]="imagen" alt="Imagen de perfil" class="perfil-imagen"> -->
+    <div class="form-group">
+      <label for="userName">Username</label>
+      <input id="userName" formControlName="userName" type="text" />
+      @if(userForm.get('userName')?.invalid && userForm.get('userName')?.touched){
+      <div class="error">
+        Username is required and must be at least 3 characters long.
+      </div>
+      }
+    </div>
 
-  <!-- Formulario para editar los datos del perfil -->
-<!--   <form [formGroup]="perfilForm" (ngSubmit)="guardarCambios()">
-    <label for="usuario">Usuario:</label>
-    <input id="usuario" formControlName="usuario" required>
+    <div class="form-group">
+      <label for="photo">Photo URL</label>
+      <input id="photo" (change)="onChange($event)" type="file" accept="image/*" />
+    </div>
 
-    <label for="imagen">URL de la Imagen:</label>
-    <input id="imagen" formControlName="imagen">
+    <div class="form-group">
+      <label for="bio">Bio</label>
+      <textarea id="bio" formControlName="bio"></textarea>
+    </div>
 
-    <label for="biografia">Biografía:</label>
-    <textarea id="biografia" formControlName="biografia"></textarea>
-
-    <button type="submit">Guardar Cambios</button>
+    <div class="form-actions">
+      <button type="submit" class="btn-submit">Save</button>
+      <button type="button" (click)="resetForm()" class="btn-reset">Reset</button>
+    </div>
   </form>
-</div> -->
+
+  <!-- Preview Section -->
+  <div class="preview">
+    <h3>Profile Preview</h3>
+    <p><strong>Username:</strong> {{ userService.user()!.userName }}</p>
+    <p><strong>Photo:</strong>
+      <img [src]="supabase.URL + userService.user()!.photo || '/assets/luigi.png'"  alt="User Photo" />
+    </p>
+    <p><strong>Bio:</strong> {{ userService.user()!.bio }}</p>
+  </div>
+</div>

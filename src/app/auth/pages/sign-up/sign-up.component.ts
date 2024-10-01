@@ -35,6 +35,7 @@ export class SignUpComponent {
     const userName = this.signUpForm.value.userName || '';
     const password = this.signUpForm.value.password || '';
     const rePassword = this.signUpForm.value.retypePassword || '';
+    const email = this.signUpForm.value.email || '';
 
     const photo = '/assets/luigi.png';
     const bio = 'vacia';
@@ -51,6 +52,7 @@ export class SignUpComponent {
       password,
       photo,
       bio,
+      email,
       owner,
     });
 

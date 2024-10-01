@@ -1,65 +1,83 @@
-import { Component } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { Component, inject, signal } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { UserService } from '../../../services/user.service';
+import Swal from 'sweetalert2';
+import { RouterLink } from '@angular/router';
+import { SupabaseService } from '../../../services/supabase.service';
 
 @Component({
   selector: 'app-profile',
-  standalone: true,
-  imports: [ReactiveFormsModule],
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.css'
+  styleUrl: './profile.component.css',
+  standalone: true,
+  imports: [RouterLink, ReactiveFormsModule],
 })
 export class ProfileComponent {
+  userForm: FormGroup = this.fb.group({
+    userName: ['', [Validators.required, Validators.minLength(3)]],
+    bio: [''],
+    owner: [false, Validators.requiredTrue],
+  });
 
-  // // Propiedades para almacenar los datos actuales
-  // usuario: string | null = '';
-  // imagen: string | null = '';
-  // biografia: string | null = '';
+  photo: File | null = null;
 
+  constructor(public userService: UserService, private fb: FormBuilder, public supabase: SupabaseService) {
+    // Inicializa el formulario con los valores actuales del signal sin modificarlo
+    const userData = this.userService.user()!; // Obtiene el valor actual del signal
 
-  // constructor(private fb:FormBuilder) {
-  //   // Inicializa el formulario con campos vacíos
-  //   // this.perfilForm = ({
-  //   //   usuario: new FormControl(''),
-  //   //   imagen: new FormControl(''),
-  //   //   biografia: new FormControl('')
-  //   // });
-  // }
+    this.userForm.setValue({
+      userName: userData.userName || '',
+      bio: userData.bio || '',
+      owner: userData.owner || false,
+    });
+  }
 
-  // ngOnInit(): void {
-  //   // Obtén los datos del usuario desde el localStorage
-  //   const currentUser = JSON.parse(localStorage.getItem('database') || 'null');
+  onChange(e: Event) {
+    const input = e.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.photo = input.files[0];
+    }
+  }
 
-  //   if (currentUser) {
-  //     this.usuario = currentUser.username;
-  //     this.imagen = currentUser.image;
-  //     this.biografia = currentUser.biografia;
+  async onSubmit() {
+    // if (!this.userForm.valid) {
+    //   Swal.fire({
+    //     title: 'error',
+    //     text: 'Los cambios no son validos',
+    //     icon: 'error',
+    //   });
+    //   return this.resetForm();
+    // }
 
-  //     // Inicializa el formulario con los datos actuales
-  //     this.perfilForm.setValue({
-  //       usuario: this.usuario,
-  //       imagen: this.imagen,
-  //       biografia: this.biografia
-  //     });
-  //   } else {
-  //     console.error('No se encontró un usuario en sesión');
-  //   }
-  // }
+    const { userName, bio } = this.userForm.value;
 
-  // // Método para guardar los cambios en el perfil
-  // guardarCambios() {
-  //   // Obtén los valores del formulario
-  //   // const updatedUser = {
-  //   //   username: this.perfilForm.value.usuario,
-  //   //   image: this.perfilForm.value.imagen,
-  //   //   biografia: this.perfilForm.value.biografia
-  //   // };
+    const result = await this.userService.update({
+      id: this.userService.user()?.id,
+      userName,
+      bio,
+      photo : this.photo || this.userService.user()?.photo,
+    });
 
-  //   // Guarda el usuario actualizado en localStorage
-  //   localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+    if (result) {
+      return alert('Exito');
+    }
 
-  //   // Muestra un mensaje o redirige al usuario, según el flujo de la app
-  //   console.log('Perfil actualizado:', updatedUser);
-  //   alert('Perfil actualizado con éxito');
-  // }
+    alert('Nombre de usuario ya existe');
+  }
 
+  // Método para resetear el formulario con los valores actuales del signal
+  resetForm() {
+    const userData = this.userService.user()!;
+    this.userForm.reset({
+      userName: userData.userName || '',
+      photo: userData.photo || '',
+      bio: userData.bio || '',
+      owner: userData.owner || false,
+    });
+  }
 }

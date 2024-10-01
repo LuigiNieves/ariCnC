@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { IUSER } from '../../../interfaces/user.interface';
 import { UserService } from '../../../services/user.service';
+import { SupabaseService } from '../../../services/supabase.service';
 
 @Component({
   selector: 'app-header',
@@ -13,11 +14,12 @@ import { UserService } from '../../../services/user.service';
 export class HeaderComponent {
   public user: IUSER | null | undefined;
 
-  constructor(public userService: UserService) {
+  constructor(public userService: UserService, private router: Router, public supabase : SupabaseService) {
     this.user = this.userService.user();
+  }
 
-    setTimeout(()=>{
-      console.log(this.user)
-    },2000)
+  logOut() {
+    this.userService.logOut();
+    this.router.navigate(['/login'])
   }
 }

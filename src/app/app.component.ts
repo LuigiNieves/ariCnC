@@ -22,9 +22,9 @@ export class AppComponent {
 
     if (!user) return
 
-    const {userName, password} = JSON.parse(user)
+    const {id} = JSON.parse(user)
 
-    this.user.logIn(userName,password)
+    this.user.findById(id)
   }
 
 }
