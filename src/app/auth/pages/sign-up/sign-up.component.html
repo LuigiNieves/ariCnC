@@ -1,0 +1,53 @@
+<div class="login-box">
+  <h2>Registrate</h2>
+
+  <form [formGroup]="signUpForm">
+      <input
+        id="userName" 
+        type="text" 
+        formControlName="userName"
+        contplaceholder="Usuario" 
+        class="input-login"
+       />
+    
+      <!-- <label for="">Email</label> -->
+      <input 
+        id="email" 
+        type="email" 
+        formControlName="email"
+        placeholder="email" 
+        class="input-login" 
+      />
+    
+      <!-- <label>Contraseña</label> -->
+      <input 
+        id="password" 
+        type="password" 
+        formControlName="password"
+        placeholder="Contraseña"    
+        class="input-login"
+      />
+      
+      <!-- <label>Reescribir Contraseña</label> -->
+      <input 
+        id="retypePassword" 
+        type="retypePassword"  
+       formControlName="retypePassword"
+        placeholder="Validar Contraseña" 
+        class="input-login"/>
+
+      <label  for="tipo">Selecciona el tipo:</label>
+      <select id="tipo" name="tipo" formControlName="owner">
+        <option selected value="">Normal</option>
+        <option value=true >Propietario</option>
+      </select>
+
+
+  </form>
+
+  <a (click)="onRegister()" class="primary"><i>Registrarme</i></a>
+
+  <a [routerLink]="['/login']" class="secondary"> <i>Regresar</i></a>
+    
+</div>
+
