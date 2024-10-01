@@ -9,7 +9,7 @@
 
 
       @if (this.userService.user()?.owner){
-      <li><a href="/html/buscar-propiedades.html">Gestionar propiedades</a></li>
+      <li><a [routerLink]="['/real-state']">Gestionar propiedades</a></li>
       }@else{
       <li><a href="/html/buscar-propiedades.html">Buscar</a></li>
       <li><a href="/html/mis-reservas.html">Mis Reservas</a></li>
@@ -23,7 +23,7 @@
 
     <div>
       <div class="profile-user">
-        <img src='{{this.supabase.URL + this.userService.user()?.photo}}' alt="">
+        <img [src]='this.supabase.image(this.userService.user()?.photo)' alt="">
         <p id="userName">{{this.userService.user()?.userName}}</p>
       </div>
 

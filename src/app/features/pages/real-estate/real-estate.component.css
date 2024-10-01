@@ -1,0 +1,5 @@
+.property-image{
+  width: 130px;
+  aspect-ratio: 1;
+  object-fit: cover;
+}

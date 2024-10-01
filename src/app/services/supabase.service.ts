@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -7,12 +8,13 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 export class SupabaseService {
   private supabase: SupabaseClient;
   private bucketName = 'aircnc'; // Reemplaza con el nombre de tu bucket de Supabase
-  public URL = 'https://sbxihfifqidrdzrbrwsm.supabase.co/storage/v1/object/public/'
+  public URL =
+    'https://sbxihfifqidrdzrbrwsm.supabase.co/storage/v1/object/public/';
 
   constructor() {
     this.supabase = createClient(
-      'https://sbxihfifqidrdzrbrwsm.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNieGloZmlmcWlkcmR6cmJyd3NtIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyNzU4MjE3NiwiZXhwIjoyMDQzMTU4MTc2fQ.bTdDyrJIK0WzjfmWAu2DYYA0WFImr6En6YrwSTXiGRA'
+      environment.supabaseConfig.url,
+      environment.supabaseConfig.secret
     );
   }
 
@@ -63,6 +65,11 @@ export class SupabaseService {
       console.error('Error deleting file:', error);
       return { data: null, error };
     }
+  }
+
+  image(path: any) {
+    if (!path || path.startsWith('/')) return path || '';
+    return this.URL + path;
   }
 
   // Listar archivos dentro de un bucket

@@ -14,11 +14,11 @@ export class UserService {
   constructor(private db: DbService, private supabase: SupabaseService) {}
 
   findById(id: string) {
-    const user = this.db.findById(id);
+    const user = this.db.findById('users',id);
 
     if (!user) return;
 
-    this.user.set(user);
+    this.user.set(user as IUSER);
   }
 
   logIn(userName: string, password: string) {
@@ -38,7 +38,7 @@ export class UserService {
   }
 
   register(user: IUSER) {
-    const userCreated = this.db.insert(user);
+    const userCreated = this.db.insertUser(user);
     if (!userCreated) return false;
     this.findById(userCreated.id);
     localStorage.setItem('session', JSON.stringify(userCreated));
@@ -59,6 +59,6 @@ export class UserService {
       user.photo = data.fullPath;
     }
 
-    return this.db.update(user);
+    return this.db.updateUser(user);
   }
 }

@@ -33,7 +33,7 @@
     <h3>Profile Preview</h3>
     <p><strong>Username:</strong> {{ userService.user()!.userName }}</p>
     <p><strong>Photo:</strong>
-      <img [src]="supabase.URL + userService.user()!.photo || '/assets/luigi.png'"  alt="User Photo" />
+      <img [src]="supabase.image(this.userService.user()?.photo)" alt="User Photo" />
     </p>
     <p><strong>Bio:</strong> {{ userService.user()!.bio }}</p>
   </div>

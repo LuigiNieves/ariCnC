@@ -1,0 +1,67 @@
+<div class="property-list-container">
+  <h2>My Properties</h2>
+
+  <!-- Formulario para agregar propiedad -->
+  <form [formGroup]="addPropertyForm" (ngSubmit)="onAddProperty()">
+    <h4>Add New Property</h4>
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" id="title" formControlName="title" placeholder="Enter property title" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" formControlName="description" placeholder="Enter property description"
+        class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="price">Price</label>
+      <input type="number" id="price" formControlName="price" placeholder="Enter property price" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="location">Location</label>
+      <input type="text" id="location" formControlName="location" placeholder="Enter property location"
+        class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="image">Image</label>
+      <input type="file" id="image" (change)="onFileSelected($event)" required />
+    </div>
+    <button type="submit" class="btn btn-submit">Add
+      Property</button>
+  </form>
+
+  <!-- Lista de propiedades con Signal -->
+
+  @for(property of propertiesSignal(); track property.id! ){
+
+  <div>
+    <h3>{{ property.title }}</h3>
+    <p>{{ property.description }}</p>
+    <p>Price: ${{ property.price }}</p>
+    <p>Location: {{ property.location }}</p>
+    @if(property.imageUrl){
+    <img [src]="this.supabase.image(property.imageUrl)" alt="Property Image" class="property-image" />
+    }
+
+
+    <button class="btn btn-edit" (click)="onEditProperty(property)">Edit</button>
+
+
+    <button class="btn btn-delete" (click)="onDeleteProperty(property.id!)">Delete</button>
+
+    @if(editingProperty && editingProperty.id === property.id){
+
+    <div>
+      <form [formGroup]="editPropertyForm" (ngSubmit)="onSubmitEdit()">
+        <input type="text" formControlName="title" placeholder="Enter new title" />
+        <input type="text" formControlName="description" placeholder="Enter new description" />
+        <input type="number" formControlName="price" placeholder="Enter new price" />
+        <input type="text" formControlName="location" placeholder="Enter new location" />
+        <button type="submit" [disabled]="editPropertyForm.invalid">Save Changes</button>
+      </form>
+    </div>
+    }
+  </div>
+  }
+
+</div>

@@ -9,22 +9,20 @@ import { UserService } from './services/user.service';
   standalone: true,
   imports: [RouterOutlet, FooterComponent, HeaderComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'AirCnC';
 
-  constructor(private user: UserService){}
+  constructor(private user: UserService) {}
 
+  ngOnInit() {
+    const user = localStorage.getItem('session');
 
-  ngOnInit(){
-    const user = localStorage.getItem('session')
+    if (!user) return;
 
-    if (!user) return
+    const { id } = JSON.parse(user);
 
-    const {id} = JSON.parse(user)
-
-    this.user.findById(id)
+    this.user.findById(id);
   }
-
 }
