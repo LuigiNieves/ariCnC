@@ -72,6 +72,7 @@ export class PropertyService {
     const index = properties.findIndex((p) => p.id === updatedProperty.id);
 
     properties[index] = updatedProperty; // Actualizar la propiedad en el array
+    this.db.updateDatabase()
     if (!file) return
     this.supabase.updateFile(`properties/${updatedProperty.id}`, file);
     // this.db.
