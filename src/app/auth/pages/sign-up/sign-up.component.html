@@ -44,7 +44,7 @@
       />
       @if (signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched) {
         @if(signUpForm.get('password')?.hasError('required')){
-          <small >Usuario es obligatoria.</small>
+          <small >Contraseña es obligatoria.</small>
         }
 
         @if(signUpForm.get('password')?.hasError('minlength') || signUpForm.get('password')?.hasError('maxlength')){

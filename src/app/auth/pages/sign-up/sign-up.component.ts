@@ -15,15 +15,9 @@ import Swal from 'sweetalert2';
 export class SignUpComponent {
   signUpForm = this.fb.group({
     userName: ['', singUpValidators],
-    email: [
-      '',
-      [
-        Validators.required,
-        Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$'),
-      ],
-    ],
-    password: ['', [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!/%*?&])[A-Za-z\d@$!%/*?&]{12,20}$')]],
-    retypePassword: ['',[Validators.required]],
+    email: ['', [Validators.required]],
+    password: ['', [Validators.required]],
+    retypePassword: ['', [Validators.required]],
     owner: [''],
   });
   constructor(
@@ -34,13 +28,11 @@ export class SignUpComponent {
 
   onRegister() {
     if (!this.signUpForm.valid) {
-
       Swal.fire({
         icon: 'error',
         text: 'Diligenciar el formulario',
-        title: 'Upss!!'
-
-      })
+        title: 'Upss!!',
+      });
       return;
     }
     const userName = this.signUpForm.value.userName || '';
@@ -58,9 +50,8 @@ export class SignUpComponent {
       Swal.fire({
         icon: 'error',
         text: 'Contrasñas no coinciden',
-        title: 'Upss!!'
-
-      })
+        title: 'Upss!!',
+      });
       return;
     }
     const response = this.user.register({
