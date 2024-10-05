@@ -1,9 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { loginValidators } from '../../const/validators';
 import Swal from 'sweetalert2';
@@ -33,7 +29,11 @@ export class LoginComponent {
 
   onLogin() {
     if (!this.loginForm.valid) {
-      alert('Diligencie el formulario');
+      Swal.fire({
+        icon: 'error',
+        text: 'Diligenciar el formulario',
+        title: 'Upss!!',
+      });
       return;
     }
     let userName = this.loginForm.value.userName || '';

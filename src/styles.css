@@ -1,3 +1,7 @@
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
+
 /* You can add global styles to this file, and also import other style files */
 * {
   margin: 0;
@@ -53,7 +57,7 @@ main {
   align-items: center;
   padding: 20px;
   margin: 40px auto;
-  min-height: 65vh;
+  min-height: 75vh;
 }
 
 .input-login {
@@ -194,7 +198,7 @@ nav div li a:hover {
   /* flex: 0.5; */
 }
 
-.short li:hover {
+.short li:hover, .filter {
   /* opacity: 1; */
   border-bottom: solid 2px #00bf63;
   cursor: pointer;
@@ -252,6 +256,7 @@ nav div li a:hover {
 #gallery {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
   width: 100%;
   position: relative;
@@ -268,18 +273,40 @@ nav div li a:hover {
     left: 30px;
   }
 
-  & div {
-    width: 250px;
+
+  & > div {
+    width: 100%;
+    display: flex;
+
+    & > div {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      & ul {
+        margin-top: 10px;
+        padding-left: 20px;
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+    }
 
     & p {
       margin: 0;
-      font-weight: 600;
+      margin-bottom: 20px;
+
+      &:first-child {
+        font-weight: bold;
+        text-transform: capitalize;
+        margin-bottom: 8px;
+      }
     }
   }
 }
 
 #gallery img {
-  width: 100%;
+  width: 250px;
   aspect-ratio: 6/4;
   padding: 5px;
   opacity: 0.6;
@@ -344,7 +371,7 @@ nav div li a:hover {
   justify-content: center;
   font-size: 14px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  margin: 40px 0;
+  margin: 60px auto;
 
   & span {
     width: 0.9px;

@@ -1,0 +1,23 @@
+<div class="property-card">
+  <div class="property-image">
+    <img [src]="this.supabase.image(property?.id)" alt="Property Image" />
+  </div>
+  <div class="property-details">
+    <h2 class="property-title">{{ property?.title }}</h2>
+    <p class="property-location"><i class="fas fa-map-marker-alt"></i> {{ property?.location }}</p>
+    <p class="property-description">{{ property?.description }}</p>
+
+    <div class="property-categories">
+      @for(category of property?.categories; track category){
+
+      <span class="category-tag">
+        {{ category }}
+      </span>
+      }
+    </div>
+
+    <div class="property-price">
+      <span>{{ propertyService.formatPrice(property!.price!)}}</span>
+    </div>
+  </div>
+</div>

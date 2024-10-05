@@ -2,7 +2,8 @@
 
   <nav>
     <ul>
-      <li><img src="../../../../assets/Aircncv.png" alt=""></li>
+      <li style="cursor: pointer;" [routerLink]="['/home']"><img src="/assets/Aircncv.png" alt=""></li>
+      <li><a [routerLink]="['/home']">Inicio</a></li>
       @if(this.userService.user()){
 
       <li><a [routerLink]="['/profile']">Mi Perfil</a></li>
@@ -11,9 +12,7 @@
       @if (this.userService.user()?.owner){
       <li><a [routerLink]="['/real-state']">Gestionar propiedades</a></li>
       }@else{
-      <li><a href="/html/buscar-propiedades.html">Buscar</a></li>
-      <li><a href="/html/mis-reservas.html">Mis Reservas</a></li>
-      <li><a href="/html/notificaciones.html">Buscar propiedades</a></li>
+      <li><a href="#">Mis Reservas</a></li>
       }
 
       }
@@ -22,12 +21,12 @@
     @if(this.userService.user() != null){
 
     <div>
-      <div class="profile-user">
-        <img [src]='this.supabase.image(this.userService.user()?.photo)' alt="">
+      <div class="profile-user" [routerLink]="['/profile']" style="cursor: pointer;">
+        <img class="user-photo" [src]='this.supabase.photo(this.userService.user())' alt="">
         <p id="userName">{{this.userService.user()?.userName}}</p>
       </div>
 
-      <li><a (click)="logOut()">Cerrar sesión</a></li>
+      <li style="cursor: pointer;"><a (click)="logOut()">Cerrar sesión</a></li>
 
     </div>
     }@else {

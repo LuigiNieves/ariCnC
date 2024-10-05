@@ -4,6 +4,9 @@ footer{
   text-align: center;
   background-color: #343034;
   border:solid 3px #343034;
+  height: 100px;
+  justify-content: center;
+  gap: 10px;
   /* color: white; */
 }
 

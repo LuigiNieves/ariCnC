@@ -8,6 +8,7 @@ import { dbKeys } from '../interfaces/database.interface';
 @Injectable({
   providedIn: 'root',
 })
+
 export class DbService {
   private db!: {
     users: IUSER[];
@@ -29,6 +30,18 @@ export class DbService {
     return this.db[key].find((user) => user.id === id);
   }
 
+  seedProperties(properties: IPROPERTY[]) {
+    this.db.properties = properties;
+    this.updateDatabase();
+  }
+
+  // TODO: HACER SEED PARA USUARIOS
+
+  seedUsers(users: IUSER[]) {
+    this.db.users = users;
+    this.updateDatabase();
+  }
+
   findOne(userName: string) {
     userName = userName.trim().toLowerCase();
     return this.db.users.find((user) => user.userName === userName);
@@ -39,19 +52,17 @@ export class DbService {
     if (userExists) return false;
     user.email = user.email?.trim().toLowerCase();
     user.userName = user.userName.trim().toLowerCase();
-    const id = uuidv4();
-    this.db.users.push({ id, ...user });
+    this.db.users.push({...user});
     this.updateDatabase();
-    return { id, ...user };
+    return {...user };
   }
 
   insertProperty() {}
 
   createProperty(property: IPROPERTY) {
-    const id = uuidv4();
-    this.db.properties.push({ id, ...property });
+    this.db.properties.push({...property });
     this.updateDatabase();
-    return { id, ...property };
+    return {...property };
   }
 
   deleteProperty(id: string) {
@@ -63,7 +74,7 @@ export class DbService {
 
     this.updateDatabase();
 
-    return true
+    return true;
   }
 
   getProperties() {
@@ -83,6 +94,7 @@ export class DbService {
     const userUpdate = this.db.users.find(({ id }) => id === user.id);
 
     userUpdate!.bio = user.bio;
+    userUpdate!.idPhoto = user.idPhoto;
     userUpdate!.photo = user.photo;
     userUpdate!.userName = user.userName.toLowerCase().trim();
 
@@ -90,6 +102,11 @@ export class DbService {
 
     return true;
   }
+
+  // updateProperty(property: IPROPERTY){
+  //    const userUpdate = this.db.users.find(({ id }) => id === user.id);
+
+  // }
 
   updateDatabase() {
     localStorage.setItem('DB', JSON.stringify(this.db));

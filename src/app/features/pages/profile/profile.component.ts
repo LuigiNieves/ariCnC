@@ -9,6 +9,7 @@ import { UserService } from '../../../services/user.service';
 import Swal from 'sweetalert2';
 import { RouterLink } from '@angular/router';
 import { SupabaseService } from '../../../services/supabase.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-profile',
@@ -26,7 +27,11 @@ export class ProfileComponent {
 
   photo: File | null = null;
 
-  constructor(public userService: UserService, private fb: FormBuilder, public supabase: SupabaseService) {
+  constructor(
+    public userService: UserService,
+    private fb: FormBuilder,
+    public supabase: SupabaseService
+  ) {
     // Inicializa el formulario con los valores actuales del signal sin modificarlo
     const userData = this.userService.user()!; // Obtiene el valor actual del signal
 
@@ -55,19 +60,27 @@ export class ProfileComponent {
     // }
 
     const { userName, bio } = this.userForm.value;
-
+    const idPhoto = uuidv4();
     const result = await this.userService.update({
       id: this.userService.user()?.id,
       userName,
       bio,
-      photo : this.photo || this.userService.user()?.photo,
+      photo: this.photo || this.userService.user()?.photo,
     });
 
     if (result) {
-      return alert('Exito');
+      return Swal.fire({
+        icon: 'success',
+        text: 'Usuario actualizado con exito',
+        title: '¡Exitoso!',
+      });
     }
 
-    alert('Nombre de usuario ya existe');
+    return Swal.fire({
+      icon: 'error',
+      text: 'Nombre de usuario ya existe',
+      title: 'Upss!!',
+    });
   }
 
   // Método para resetear el formulario con los valores actuales del signal

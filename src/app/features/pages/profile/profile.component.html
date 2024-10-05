@@ -1,19 +1,21 @@
 <div class="profile-container">
+  <img class="user-photo" [src]="supabase.photo(this.userService.user())" alt="User Photo" />
+
   <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="form">
-    <h2>Edit Profile</h2>
+    <h2>Editar perfil</h2>
 
     <div class="form-group">
       <label for="userName">Username</label>
       <input id="userName" formControlName="userName" type="text" />
       @if(userForm.get('userName')?.invalid && userForm.get('userName')?.touched){
       <div class="error">
-        Username is required and must be at least 3 characters long.
+        Nomber de usuario debe ser de almenos 3 caracteres
       </div>
       }
     </div>
 
     <div class="form-group">
-      <label for="photo">Photo URL</label>
+      <label for="photo">Foto</label>
       <input id="photo" (change)="onChange($event)" type="file" accept="image/*" />
     </div>
 
@@ -23,18 +25,9 @@
     </div>
 
     <div class="form-actions">
-      <button type="submit" class="btn-submit">Save</button>
-      <button type="button" (click)="resetForm()" class="btn-reset">Reset</button>
+      <button type="submit" class="btn-submit">Guardar</button>
+      <button type="button" (click)="resetForm()" class="btn-reset">Restablecer</button>
     </div>
   </form>
 
-  <!-- Preview Section -->
-  <div class="preview">
-    <h3>Profile Preview</h3>
-    <p><strong>Username:</strong> {{ userService.user()!.userName }}</p>
-    <p><strong>Photo:</strong>
-      <img [src]="supabase.image(this.userService.user()?.photo)" alt="User Photo" />
-    </p>
-    <p><strong>Bio:</strong> {{ userService.user()!.bio }}</p>
-  </div>
 </div>

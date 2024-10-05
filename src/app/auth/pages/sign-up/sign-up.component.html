@@ -1,12 +1,12 @@
 <div class="login-box">
   <h2>Registrate</h2>
 
-  <form [formGroup]="signUpForm">
+  <form [formGroup]="signUpForm" (submit)="$event.preventDefault(); onRegister()">
       <input
         id="userName" 
         type="text" 
         formControlName="userName"
-        contplaceholder="Usuario" 
+        placeholder="Usuario" 
         class="input-login"
        />
     
@@ -37,10 +37,12 @@
         class="input-login"/>
 
       <label  for="tipo">Selecciona el tipo:</label>
-      <select id="tipo" name="tipo" formControlName="owner">
+      <select id="tipo" name="tipo" formControlName="owner" class="tipo">
         <option selected value="">Normal</option>
         <option value=true >Propietario</option>
       </select>
+
+      <input type="submit" hidden>
 
 
   </form>

@@ -40,7 +40,7 @@ export class UserService {
   register(user: IUSER) {
     const userCreated = this.db.insertUser(user);
     if (!userCreated) return false;
-    this.findById(userCreated.id);
+    this.findById(userCreated.id!);
     localStorage.setItem('session', JSON.stringify(userCreated));
     return true;
   }
@@ -52,10 +52,10 @@ export class UserService {
 
   async update(user: IUSER) {
     if (user.photo instanceof File) {
-      const path = uuid4();
+      user.idPhoto = uuid4();
 
-      const folerName = `/${user.id}/${path}`;
-      const { data } = await this.supabase.uploadFile(folerName, user.photo);
+      const folderName = `/user/${user.idPhoto}`;
+      const { data } = await this.supabase.uploadFile(folderName, user.photo);
       user.photo = data.fullPath;
     }
 

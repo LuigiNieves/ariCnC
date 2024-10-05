@@ -16,8 +16,5 @@ export class FooterComponent {
   constructor(public userService: UserService) {
     this.user = this.userService.user();
 
-    setTimeout(()=>{
-      console.log(this.user)
-    },2000)
   }
 }

@@ -1,3 +1,5 @@
+import { FilterEnum } from "../enum/filter.enum";
+
 export interface IPROPERTY {
   id?: string;
   title: string;
@@ -6,4 +8,5 @@ export interface IPROPERTY {
   location: string;
   ownerId: string;
   imageUrl?: string | File;
+  categories?: FilterEnum[]
 } 
