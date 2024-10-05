@@ -14,7 +14,7 @@ export class UserService {
   constructor(private db: DbService, private supabase: SupabaseService) {}
 
   findById(id: string) {
-    const user = this.db.findById('users',id);
+    const user = this.db.findById('users', id);
 
     if (!user) return;
 
@@ -40,7 +40,7 @@ export class UserService {
   register(user: IUSER) {
     const userCreated = this.db.insertUser(user);
     if (!userCreated) return false;
-    this.findById(userCreated.id!);
+    this.user.set(userCreated);  
     localStorage.setItem('session', JSON.stringify(userCreated));
     return true;
   }

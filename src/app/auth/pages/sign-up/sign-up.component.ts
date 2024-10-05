@@ -65,9 +65,13 @@ export class SignUpComponent {
     });
 
     if (response) {
-      this.router.navigateByUrl('/home');
+      window.location.href = '/home'
     } else {
-      alert(response);
+      Swal.fire({
+        icon: 'error',
+        text: 'Usuario ya existe',
+        title: 'Upss!!',
+      })
     }
   }
 }

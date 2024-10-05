@@ -138,9 +138,19 @@ export class RealEstateComponent {
       );
 
       if (property?.error) {
-        console.log('Error subiendo');
+      Swal.fire({
+        title: 'Error al crear la propiedad',
+        icon: 'error',
+        confirmButtonText: 'Okay',
+      })
         return;
       }
+
+      Swal.fire({
+        title: 'Propiedad creada exitosamente!',
+        icon:'success',
+        confirmButtonText: 'Okay',
+      })
 
       this.propertiesSignal.update((last) => [...last, property]);
 
@@ -153,4 +163,5 @@ import { IPROPERTY } from '../../../interfaces/property.interface';
 import { UserService } from '../../../services/user.service';
 import { SupabaseService } from '../../../services/supabase.service';
 import { CommonModule } from '@angular/common';
-import { FilterEnum } from '../../../enum/filter.enum';
+import { FilterEnum } from '../../../enum/filter.enum';import Swal from 'sweetalert2';
+
