@@ -3,9 +3,9 @@
   <nav>
     <ul>
       <li style="cursor: pointer;" [routerLink]="['/home']"><img src="/assets/Aircncv.png" alt=""></li>
-      <li><a [routerLink]="['/home']">Inicio</a></li>
       @if(this.userService.user()){
 
+      <li><a [routerLink]="['/home']">Inicio</a></li>
       <li><a [routerLink]="['/profile']">Mi Perfil</a></li>
 
 
