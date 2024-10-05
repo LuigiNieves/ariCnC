@@ -4,7 +4,10 @@
   <form [formGroup]="loginForm" (submit)="$event.preventDefault(); onLogin()">
 
     <input id="userName" formControlName="userName" placeholder="Usuario" class="input-login" />
+    
     <input id="password" type="password" formControlName="password" placeholder="Contraseña" class="input-login" />
+    
+
 
     <a (click)="onLogin()" class="primary">Ingresar</a>
     <input type="submit" hidden>

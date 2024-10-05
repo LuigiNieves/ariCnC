@@ -9,6 +9,21 @@
         placeholder="Usuario" 
         class="input-login"
        />
+       @if (signUpForm.get('userName')?.invalid && signUpForm.get('userName')?.touched) {
+
+        @if(signUpForm.get('userName')?.hasError('required')){
+          <small >Usuario es obligatoria.</small>
+        }
+        @if(signUpForm.get('userName')?.hasError('minlength') || signUpForm.get('userName')?.hasError('maxlength')) {
+  
+          <small >Debe tener al menos 8 y 15 caracteres.</small>
+        }
+        @if(signUpForm.get('userName')?.hasError('pattern')){
+          <small >sin espacio y no iniciar en Car o num.</small>
+        }
+  
+   
+      }
     
       <!-- <label for="">Email</label> -->
       <input 
@@ -27,6 +42,20 @@
         placeholder="Contraseña"    
         class="input-login"
       />
+      @if (signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched) {
+        @if(signUpForm.get('password')?.hasError('required')){
+          <small >Usuario es obligatoria.</small>
+        }
+
+        @if(signUpForm.get('password')?.hasError('minlength') || signUpForm.get('password')?.hasError('maxlength')){
+          <small >Debe tener al menos 12 y 20 caracteres.</small>
+        }
+        @if(signUpForm.get('password')?.hasError('pattern')){
+          <small >Debe contener 1May 1Min 1num y Car.</small>
+        }
+
+  }
+
       
       <!-- <label>Reescribir Contraseña</label> -->
       <input 

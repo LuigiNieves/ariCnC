@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { loginValidators } from '../../const/validators';
 import Swal from 'sweetalert2';
 import { UserService } from '../../../services/user.service';
 
@@ -14,7 +13,7 @@ import { UserService } from '../../../services/user.service';
 })
 export class LoginComponent {
   loginForm = this.fb.group({
-    userName: ['', loginValidators],
+    userName: ['', [Validators.required]],
     password: ['', [Validators.required]],
     owner: [''],
 

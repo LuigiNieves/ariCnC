@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { loginValidators } from '../../const/validators';
+import { singUpValidators } from '../../const/validators';
 import { UserService } from '../../../services/user.service';
 import { v4 as uuidv4 } from 'uuid';
 import Swal from 'sweetalert2';
@@ -14,16 +14,16 @@ import Swal from 'sweetalert2';
 })
 export class SignUpComponent {
   signUpForm = this.fb.group({
-    userName: ['', loginValidators],
+    userName: ['', singUpValidators],
     email: [
       '',
       [
         Validators.required,
-        Validators.pattern('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/'),
+        Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$'),
       ],
     ],
-    password: ['', [Validators.required]],
-    retypePassword: [''],
+    password: ['', [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!/%*?&])[A-Za-z\d@$!%/*?&]{12,20}$')]],
+    retypePassword: ['',[Validators.required]],
     owner: [''],
   });
   constructor(
