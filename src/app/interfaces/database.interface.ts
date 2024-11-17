@@ -1,1 +1,0 @@
-export type dbKeys = 'users' | 'properties'

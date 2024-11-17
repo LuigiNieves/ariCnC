@@ -1,0 +1,1 @@
+export type dbKeys = 'users' | 'real-states'

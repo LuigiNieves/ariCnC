@@ -1,0 +1,37 @@
+<header>
+
+  <nav>
+    <ul>
+      <li style="cursor: pointer;" [routerLink]="['/home']"><img src="/assets/Aircncv.png" alt=""></li>
+      @if(this.userService.loginStatus()){
+
+      <li><a [routerLink]="['/home']">Inicio</a></li>
+      <li><a [routerLink]="['/profile']">Mi Perfil</a></li>
+
+
+      @if (this.userService.user()?.isowner){
+      <li><a [routerLink]="['/real-state']">Gestionar propiedades</a></li>
+      }@else{
+      <li><a href="#">Mis Reservas</a></li>
+      }
+
+      }
+    </ul>
+    @if(this.userService.loginStatus()){
+
+    <div>
+      <div class="profile-user" [routerLink]="['/profile']" style="cursor: pointer;">
+        <img class="user-photo" [src]='this.supabase.photo(this.userService.user())' alt="">
+        <p id="userName">{{this.userService.user()?.username}}</p>
+      </div>
+
+      <li style="cursor: pointer;"><a (click)="logOut()">Cerrar sesión</a></li>
+
+    </div>
+    }@else {
+    <div>
+      <li><a [routerLink]="['/login']">Iniciar sesión</a></li>
+    </div>
+    }
+  </nav>
+</header>
