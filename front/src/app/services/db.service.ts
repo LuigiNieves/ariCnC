@@ -43,14 +43,15 @@ export class DbService {
     );
   }
 
-  getRealStateByOwner(ownerId:string) {
-    return this.http.get<IREALSTATE[]>(this.url + '/real-states/owner/' + ownerId).pipe(
-      tap((response) => {
-        return response;
-      }),
-      catchError((e) => e.message)
-    );
-
+  getRealStateByOwner(ownerId: string) {
+    return this.http
+      .get<IREALSTATE[]>(this.url + '/real-states/owner/' + ownerId)
+      .pipe(
+        tap((response) => {
+          return response;
+        }),
+        catchError((e) => e.message)
+      );
   }
 
   updateRealState(realState: IREALSTATE) {
@@ -98,10 +99,13 @@ export class DbService {
 
   insertProperty() {}
 
-  createProperty(property: IREALSTATE) {
-    this.db.RealState.push({ ...property });
-    this.updateDatabase();
-    return { ...property };
+  createRealState(property: IREALSTATE, userId: string) {
+    return this.http.post(`${this.url}/real-states`, { ...property, userId }).pipe(
+      tap((response) => {
+        return response;
+      }),
+      catchError((e) => e.message)
+    );
   }
 
   deleteProperty(id: string) {

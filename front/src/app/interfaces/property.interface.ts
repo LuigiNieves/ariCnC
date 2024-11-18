@@ -1,5 +1,3 @@
-import { FilterEnum } from "../enum/filter.enum";
-
 export interface IREALSTATE {
   id?: string;
   title: string;
@@ -8,5 +6,4 @@ export interface IREALSTATE {
   location: string;
   ownerId: string;
   imageUrl?: string | File;
-  categories?: FilterEnum[]
 } 

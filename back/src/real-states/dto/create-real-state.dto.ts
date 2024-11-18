@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsUUID, IsPositive, Min, Max } from 'class-validator';
+import { IsString, IsNumber, IsUUID, IsPositive, Min, Max, IsNotEmpty } from 'class-validator';
 
 export class CreateRealStateDto {
   @IsUUID()
@@ -13,24 +13,29 @@ export class CreateRealStateDto {
   @IsString()
   address: string;
 
-  @IsNumber()
-  latitude: number;
+  // @IsNumber()
+  // latitude: number;
 
-  @IsNumber()
-  longitude: number;
+  // @IsNumber()
+  // longitude: number;
 
   @IsPositive()
-  pricePerNight: number;
+  price: number;
 
-  @IsNumber()
-  @Min(1)
-  numBedrooms: number;
 
-  @IsNumber()
-  @Min(1)
-  numBathrooms: number;
+  @IsString()
+  @IsNotEmpty()
+  imageUrl: string;
 
-  @IsNumber()
-  @Min(1)
-  maxGuests: number;
+  // @IsNumber()
+  // @Min(1)
+  // numBedrooms: number;
+
+  // @IsNumber()
+  // @Min(1)
+  // numBathrooms: number;
+
+  // @IsNumber()
+  // @Min(1)
+  // maxGuests: number;
 }

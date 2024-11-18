@@ -60,7 +60,7 @@
         class="form-control"></textarea>
     </div>
 
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label>Categorías</label>
       @for ( category of CATEGORIES; track category) {
       <section class="categories">
@@ -68,7 +68,7 @@
         <label [for]="category">{{ category.toLowerCase() }}</label>
       </section>
       }
-    </div>
+    </div> -->
 
     <button class="btn btn-submit" (click)="editSelect() ? onSubmitEdit() : onAddProperty()">
       {{ editSelect() ? 'Guardar Cambios' : 'Agregar' }}

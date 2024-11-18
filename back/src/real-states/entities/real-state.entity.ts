@@ -19,23 +19,26 @@ export class RealState {
   @Column()
   address: string;
 
-  @Column('decimal')
-  latitude: number;
+  // @Column('decimal')
+  // latitude: number;
+
+  // @Column('decimal')
+  // longitude: number;
 
   @Column('decimal')
-  longitude: number;
+  price: number;
 
-  @Column('decimal')
-  pricePerNight: number;
+  // @Column()
+  // numBedrooms: number;
+
+  // @Column()
+  // numBathrooms: number;
+
+  // @Column()
+  // maxGuests: number;
 
   @Column()
-  numBedrooms: number;
-
-  @Column()
-  numBathrooms: number;
-
-  @Column()
-  maxGuests: number;
+  imageUrl: string;
 
   @CreateDateColumn()
   createdAt: Date;

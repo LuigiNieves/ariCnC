@@ -29,12 +29,6 @@
       <p>{{property.title}}</p>
       <p>{{property.description}}</p>
       <span>{{propertyService.formatPrice(property.price)}}</span>
-      <ul style="list-style: none;">
-        @for(category of property.categories; track $index){
-        <li>{{category}}</li>
-
-        }
-      </ul>
     </div>
   </div>
   }
@@ -55,12 +49,6 @@
       <p>{{property.title}}</p>
       <p>{{property.description}}</p>
       <span>{{propertyService.formatPrice(property.price)}}</span>
-      <ul style="list-style: none;">
-        @for(category of property.categories; track $index){
-        <li>{{category}}</li>
-
-        }
-      </ul>
     </div>
   </div>
   }

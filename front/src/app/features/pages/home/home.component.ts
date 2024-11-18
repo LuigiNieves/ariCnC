@@ -43,21 +43,16 @@ export class HomeComponent {
   }
 
   setFilter(filter: FilterEnum) {
-    if (filter == this.filter()) {
-      this.filter.set(FilterEnum.ALL);
-      this.updateProperties()
-      return;
-    }
+    // if (filter == this.filter()) {
+    //   this.filter.set(FilterEnum.ALL);
+    //   this.updateProperties()
+    //   return;
+    // }
 
-    this.filter.set(filter);
-    const filterT5 = [...this.propertyService.realStateT5()!].filter(
-      (property) => property.categories?.includes(filter)
-    );
-    const filterAll = [...this.propertyService.realState()!].filter(
-      (property) => property.categories?.includes(filter)
-    );
+    // this.filter.set(filter);
 
-    this.filterProperties.set(filterAll);
-    this.filterPropertiesT5.set(filterT5);
+
+    // this.filterProperties.set(filterAll);
+    // this.filterPropertiesT5.set(filterT5);
   }
 }

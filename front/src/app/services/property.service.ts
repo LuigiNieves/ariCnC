@@ -3,6 +3,7 @@ import { IREALSTATE } from '../interfaces/property.interface';
 import { DbService } from './db.service';
 import { v4 as uuid4 } from 'uuid';
 import { SupabaseService } from './supabase.service';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,11 @@ export class PropertyService {
   realState: WritableSignal<IREALSTATE[] | null> = signal(null);
   realStateT5: WritableSignal<IREALSTATE[] | null> = signal(null);
 
-  constructor(private db: DbService, private supabase: SupabaseService) {
+  constructor(
+    private db: DbService,
+    private supabase: SupabaseService,
+    private userService: UserService
+  ) {
     this.getAllRealState().subscribe((realState) => {
       this.realState.update(() => realState as IREALSTATE[]);
       this.realStateT5.update(() =>
@@ -47,14 +52,20 @@ export class PropertyService {
 
       const { data, error } = await this.supabase.uploadFile(path, file);
 
+      console.log(path)
+
       if (error) return { error: 'Error subiendo' };
 
       property.imageUrl = data.fullPath;
       property.id = id;
     }
 
-    const result = this.db.createProperty(property);
-    this.realState.update((last) => [...last!, result]);
+    const result = this.db
+      .createRealState(property, this.userService.user()?.userId!)
+      .subscribe((result) => {
+        console.log('property created', result);
+        this.realState.update((last) => [...last!, result as IREALSTATE]);
+      });
 
     return result;
   }
@@ -86,7 +97,6 @@ export class PropertyService {
 
   // Obtener propiedades por el propietario
   getRealStateByOwner(ownerId: string) {
-
-    return this.db.getRealStateByOwner(ownerId)
+    return this.db.getRealStateByOwner(ownerId);
   }
 }
