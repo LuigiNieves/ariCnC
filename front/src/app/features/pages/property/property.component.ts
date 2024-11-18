@@ -17,19 +17,20 @@ export class PropertyComponent {
   constructor(
     private router: ActivatedRoute,
     public propertyService: PropertyService,
-    public supabase: SupabaseService
+    public supabase: SupabaseService,
+    public routerNav: Router
   ) {
     this.router.paramMap.subscribe((param) => {
-      this.property = propertyService.getPropertyById(
-        param.get('id')!
-      ) as unknown as IREALSTATE;
-
-      console.log(this.property)
+      propertyService
+        .getPropertyById(param.get('id')!)
+        .subscribe((property) => {
+          if (typeof property == 'string') {
+            this.routerNav.navigate(['/home']);
+            return;
+          }
+          this.property = property as IREALSTATE;
+          console.log(property);
+        });
     });
   }
-
-
-
-
-  
 }

@@ -18,6 +18,11 @@ export class RealStatesController {
     return this.realStatesService.findAll();
   }
 
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.realStatesService.findOne(id);
+  }
+
   @Get('owner/:id')
   findOwnerRealStates(@Param('id') id: string) {
     return this.realStatesService.findOwnerRealStates(id);

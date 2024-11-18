@@ -31,6 +31,11 @@ export class RealStatesService {
     return await this.realStateRepository.find();
   }
 
+  async findOne(realStateId: string) {
+    return await this.realStateRepository.findOne({
+      where: { realStateId },
+    });
+  }
 
   async findOwnerRealStates(userId: string) {
     return await this.userRepository
@@ -41,14 +46,14 @@ export class RealStatesService {
       .then((user) => user.realStates);
   }
 
-  update(realStateId: string, updateRealStateDto: UpdateRealStateDto){
-    return this.realStateRepository.update(realStateId, updateRealStateDto as unknown as RealState);
+  update(realStateId: string, updateRealStateDto: UpdateRealStateDto) {
+    return this.realStateRepository.update(
+      realStateId,
+      updateRealStateDto as unknown as RealState,
+    );
   }
 
   remove(realStateId: string) {
-    return this.realStateRepository.delete(realStateId);  
+    return this.realStateRepository.delete(realStateId);
   }
-
-
-
 }
