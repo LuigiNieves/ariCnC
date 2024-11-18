@@ -58,14 +58,12 @@ export class RealEstateComponent {
   }
 
   loadProperties() {
-    setTimeout(() => {
-      const ownerId = this.userService.user()?.userId;
-      this.propertyService
-        .getRealStateByOwner(ownerId!)
-        .subscribe((properties) => {
-          return this.propertiesSignal.set(properties as IREALSTATE[]);
-        });
-    }, 400);
+    const ownerId = this.userService.user()?.userId;
+    this.propertyService
+      .getRealStateByOwner(ownerId!)
+      .subscribe((properties) => {
+        return this.propertiesSignal.set(properties as IREALSTATE[]);
+      });
   }
 
   onEditProperty(property: IREALSTATE) {

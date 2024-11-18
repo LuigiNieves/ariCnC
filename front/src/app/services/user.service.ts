@@ -47,16 +47,33 @@ export class UserService {
     }
   }
 
-  getToken() {
+  async getToken(): Promise<boolean> {
     const token = this.token;
-    if (!token) return;
-    return this.http.post(`${this.#urlBase}/users/token`, { token }).pipe(
-      tap((user) => {
-        this.user.set(user as IUSER);
-        this.#isLogged.update(() => true);
-      }),
-      catchError(async (error) => localStorage.removeItem('token'))
-    );
+    if (!token) return false;
+
+    try {
+      const req = await fetch(`${this.#urlBase}/users/token`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token }),
+      });
+      if (!req.ok) {
+        localStorage.removeItem('token');
+        return false;
+      }
+
+      const res = await req.json();
+
+
+      this.#isLogged.set(true);
+      this.user.set(res);
+
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   logIn(username: string, password: string) {
@@ -83,6 +100,7 @@ export class UserService {
   logOut() {
     this.#isLogged.update(() => false);
     localStorage.clear();
+    window.location.reload();
   }
 
   register(user: IUSER) {

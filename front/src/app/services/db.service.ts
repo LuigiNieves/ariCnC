@@ -16,7 +16,7 @@ export class DbService {
     RealState: IREALSTATE[];
   };
 
-  private url = 'http://localhost:3000/api';
+  public url = 'http://localhost:3000/api';
 
   constructor(private readonly http: HttpClient) {
     this.getRealState();
@@ -34,7 +34,11 @@ export class DbService {
   }
 
   getRealState() {
-    return this.http.get<IREALSTATE[]>(this.url + '/real-states').pipe(
+    return this.http.get<IREALSTATE[]>(this.url + '/real-states', {
+      headers: {
+        Authorization: 'Bearer '+ localStorage.getItem('token'),
+      },
+    }).pipe(
       tap((response) => {
         console.log(response);
         return response;
@@ -45,7 +49,11 @@ export class DbService {
 
   getRealStateByOwner(ownerId: string) {
     return this.http
-      .get<IREALSTATE[]>(this.url + '/real-states/owner/' + ownerId)
+      .get<IREALSTATE[]>(this.url + '/real-states/owner/' + ownerId, {
+        headers: {
+          Authorization: 'Bearer '+ localStorage.getItem('token'),
+        }
+      })
       .pipe(
         tap((response) => {
           return response;
@@ -58,7 +66,12 @@ export class DbService {
     return this.http
       .put<IREALSTATE>(
         `${this.url}/real-states/${realState.realStateId}`,
-        realState
+        realState,
+        {
+          headers: {
+            Authorization: 'Bearer '+ localStorage.getItem('token'),
+          },
+        }
       )
       .pipe(
         tap((response) => {
@@ -99,8 +112,6 @@ export class DbService {
       catchError((e) => e.message)
     );
   }
-
-  insertProperty() {}
 
   createRealState(property: IREALSTATE, userId: string) {
     return this.http

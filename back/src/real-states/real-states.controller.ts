@@ -1,8 +1,20 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { CreateRealStateDto } from './dto/create-real-state.dto';
 import { UpdateRealStateDto } from './dto/update-real-state.dto';
 
 import { RealStatesService } from './real-states.service';
+import { LoggedInGuard } from 'src/guards/loggedIn';
+import { TokenGuard } from 'src/guards/token';
 
 @Controller('real-states')
 export class RealStatesController {
@@ -13,6 +25,7 @@ export class RealStatesController {
     return this.realStatesService.create(createRealStateDto);
   }
 
+  @UseGuards(LoggedInGuard)
   @Get()
   findAll() {
     return this.realStatesService.findAll();
@@ -23,13 +36,18 @@ export class RealStatesController {
     return this.realStatesService.findOne(id);
   }
 
+  @UseGuards(TokenGuard)
   @Get('owner/:id')
   findOwnerRealStates(@Param('id') id: string) {
     return this.realStatesService.findOwnerRealStates(id);
   }
 
+
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateRealStateDto: UpdateRealStateDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateRealStateDto: UpdateRealStateDto,
+  ) {
     return this.realStatesService.update(id, updateRealStateDto);
   }
 
@@ -37,5 +55,4 @@ export class RealStatesController {
   remove(@Param('id') id: string) {
     return this.realStatesService.remove(id);
   }
-
 }

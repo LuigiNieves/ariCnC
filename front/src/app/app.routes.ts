@@ -6,17 +6,31 @@ import { ProfileComponent } from './features/pages/profile/profile.component';
 import { LayoutComponent } from './layout/layout.component';
 import { RealEstateComponent } from './features/pages/real-estate/real-estate.component';
 import { PropertyComponent } from './features/pages/property/property.component';
+import { loggedInGuard } from './guards/auth/logged-in.guard';
+import { loggedOutGuard } from './guards/auth/logged-out.guard';
 
 export const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
     children: [
-      { path: 'login', component: LoginComponent },
-      { path: 'sign-up', component: SignUpComponent },
-      { path: 'home', component: HomeComponent },
-      { path: 'profile', component: ProfileComponent },
-      { path: 'real-state', component: RealEstateComponent },
+      {
+        path: 'login',
+        component: LoginComponent,
+        canActivate: [loggedOutGuard],
+      },
+      {
+        path: 'sign-up',
+        component: SignUpComponent,
+        canActivate: [loggedOutGuard],
+      },
+      { path: 'home', component: HomeComponent, canActivate: [loggedInGuard] },
+      {
+        path: 'profile',
+        component: ProfileComponent,
+        canActivate: [loggedInGuard],
+      },
+      { path: 'real-state', component: RealEstateComponent, canActivate: [loggedInGuard] },
       { path: 'real-state/:id', component: PropertyComponent },
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: '**', redirectTo: 'login', pathMatch: 'full' },

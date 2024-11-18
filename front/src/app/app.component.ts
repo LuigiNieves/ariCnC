@@ -16,7 +16,4 @@ export class AppComponent {
 
   constructor(private user: UserService) {}
 
-  ngOnInit() {
-    this.user.getToken()?.subscribe();
-  }
 }
