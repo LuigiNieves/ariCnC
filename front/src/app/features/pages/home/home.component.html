@@ -1,22 +1,21 @@
 <section class="menu">
 
   <ul class="short">
-    <li (click)="setFilter(FilterEnum.ISLA)" [class]="{filter : filter() === FilterEnum.ISLA}"><a><i
-          class="fas fa-umbrella-beach"></i><span>Frente a la playa</span></a></li>
-    <li (click)="setFilter(FilterEnum.DOMO)" [class]="{filter : filter() === FilterEnum.DOMO}"><a><i
-          class="fas fa-igloo"></i></a><span>Casas domo</span></li>
-    <li (click)="setFilter(FilterEnum.PISCINA)" [class]="{filter : filter() === FilterEnum.PISCINA}"><a><i
-          class="fas fa-swimming-pool"></i><span>Piscinas increibles</span></a></li>
-    <li (click)="setFilter(FilterEnum.APTO)" [class]="{filter : filter() === FilterEnum.APTO}"><a><i
-          class="fas fa-tree"></i></a><span>Apartamento</span></li>
-    <li (click)="setFilter(FilterEnum.POPULAR)" [class]="{filter : filter() === FilterEnum.POPULAR}"><a><i
-          class="fas fa-fire-alt"></i></a><span>Populares</span></li>
+    <li><a><i class="fas fa-umbrella-beach"></i><span>Frente a la
+          playa</span></a></li>
+    <li><a><i class="fas fa-igloo"></i></a><span>Casas domo</span>
+    </li>
+    <li><a><i class="fas fa-swimming-pool"></i><span>Piscinas
+          increibles</span></a></li>
+    <li><a><i class="fas fa-tree"></i></a><span>Apartamento</span>
+    </li>
+    <li><a><i class="fas fa-fire-alt"></i></a><span>Populares</span></li>
   </ul>
 
 </section>
 <section class="search-box">
-  <p>En cualquier lugar del mundo</p>
-  <span></span>kll
+  <input (input)="setFilter($event)" type="text" placeholder="En cualquier lugar del mundo">
+  <span></span>
   <p>Por semanas</p>
   <span></span>
   <p>¿Cuantos?</p>
@@ -27,6 +26,8 @@
   <h1>Top 5</h1>
 
   @for(property of propertyService.realState(); track property.realStateId){
+  @if(inFilter(property)){
+
   <div [routerLink]="['/real-state/'+property.realStateId]">
     <img [src]="supabase.URL + property.imageUrl" alt="">
     <div>
@@ -37,6 +38,7 @@
     </div>
   </div>
   }
+  }
 
 
 
@@ -46,6 +48,8 @@
   <h1>Otras propiedades</h1>
 
   @for(property of propertyService.realStateT5(); track property.realStateId){
+  @if(inFilter(property)){
+
   <div [routerLink]="['/real-state/'+property.realStateId]">
     <img [src]="supabase.URL + property.imageUrl" alt="">
     <div>
@@ -55,5 +59,6 @@
       <span>{{propertyService.formatPrice(property.price)}}</span>
     </div>
   </div>
+  }
   }
 </section>

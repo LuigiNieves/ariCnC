@@ -19,8 +19,7 @@ import { IREALSTATE } from '../../../interfaces/property.interface';
 export class HomeComponent {
   public user: IUSER | null | undefined;
 
-  filter: WritableSignal<FilterEnum> = signal(FilterEnum.ALL);
-  FilterEnum = FilterEnum;
+  filter: WritableSignal<string> = signal('');
 
   constructor(
     public userService: UserService,
@@ -30,14 +29,22 @@ export class HomeComponent {
     this.user = this.userService.user();
   }
 
-  setFilter(filter: FilterEnum) {
-    // if (filter == this.filter()) {
-    //   this.filter.set(FilterEnum.ALL);
-    //   this.updateProperties()
-    //   return;
-    // }
-    // this.filter.set(filter);
-    // this.filterProperties.set(filterAll);
-    // this.filterPropertiesT5.set(filterT5);
+  inFilter(realState: IREALSTATE) {
+    if (this.filter().trim() === '') return true;
+
+    const filter = this.filter().toLowerCase().trim();
+    const title = realState.title.toLowerCase().trim();
+    const description = realState.description.toLowerCase().trim();
+    const location = realState.location.toLowerCase().trim();
+    return (
+      title.includes(filter) ||
+      description.includes(filter) ||
+      location.includes(filter)
+    );
+  }
+
+  setFilter(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.filter.set(value);
   }
 }
