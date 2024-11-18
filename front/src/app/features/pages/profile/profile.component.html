@@ -1,13 +1,15 @@
+@if(this.userService.user() != null){
+
 <div class="profile-container">
-  <img class="user-photo" [src]="supabase.photo(this.userService.user())" alt="User Photo" />
+  <img class="user-photo" [src]="supabase.URL + this.userService.user()?.profilePicture" alt="User Photo" />
 
   <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="form">
     <h2>Editar perfil</h2>
 
     <div class="form-group">
       <label for="userName">Username</label>
-      <input id="userName" formControlName="userName" type="text" />
-      @if(userForm.get('userName')?.invalid && userForm.get('userName')?.touched){
+      <input id="userName" formControlName="username" type="text" />
+      @if(userForm.get('username')?.invalid && userForm.get('username')?.touched){
       <div class="error">
         Nomber de usuario debe ser de almenos 3 caracteres
       </div>
@@ -31,3 +33,4 @@
   </form>
 
 </div>
+}

@@ -36,7 +36,7 @@ export class DbService {
   getRealState() {
     return this.http.get<IREALSTATE[]>(this.url + '/real-states').pipe(
       tap((response) => {
-        this.db.RealState = response as IREALSTATE[];
+        console.log(response);
         return response;
       }),
       catchError((e) => e.message)
@@ -56,7 +56,10 @@ export class DbService {
 
   updateRealState(realState: IREALSTATE) {
     return this.http
-      .put<IREALSTATE>(`${this.url}/real-states/${realState.realStateId}`, realState)
+      .put<IREALSTATE>(
+        `${this.url}/real-states/${realState.realStateId}`,
+        realState
+      )
       .pipe(
         tap((response) => {
           return response;
@@ -100,38 +103,22 @@ export class DbService {
   insertProperty() {}
 
   createRealState(property: IREALSTATE, userId: string) {
-    return this.http.post(`${this.url}/real-states`, { ...property, userId }).pipe(
-      tap((response) => {
-        return response;
-      }),
-      catchError((e) => e.message)
-    );
+    return this.http
+      .post(`${this.url}/real-states`, { ...property, userId })
+      .pipe(
+        tap((response) => {
+          return response;
+        }),
+        catchError((e) => e.message)
+      );
   }
 
   deleteProperty(id: string) {
-    return this.http.delete(`${this.url}/real-states/${id}`)
-  }
-
-  repeatedEmailOrusername(userUpdate: IUSER) {
-    return this.db.users.find(
-      (user) => user.id != userUpdate.id && user.username == userUpdate.username
-    );
+    return this.http.delete(`${this.url}/real-states/${id}`);
   }
 
   updateUser(user: IUSER) {
-    const findUser = this.repeatedEmailOrusername(user);
-    if (findUser) return false;
-
-    const userUpdate = this.db.users.find(({ id }) => id === user.id);
-
-    userUpdate!.bio = user.bio;
-    userUpdate!.idPhoto = user.idPhoto;
-    userUpdate!.photo = user.photo;
-    userUpdate!.username = user.username.toLowerCase().trim();
-
-    this.updateDatabase();
-
-    return true;
+    return this.http.put(`${this.url}/users/${user.userId}`, user);
   }
 
   updateDatabase() {

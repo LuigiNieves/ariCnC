@@ -21,7 +21,7 @@
 
     <div>
       <div class="profile-user" [routerLink]="['/profile']" style="cursor: pointer;">
-        <img class="user-photo" [src]='this.supabase.photo(this.userService.user())' alt="">
+        <img class="user-photo" [src]='supabase.URL + this.userService.user()?.profilePicture' alt="">
         <p id="userName">{{this.userService.user()?.username}}</p>
       </div>
 

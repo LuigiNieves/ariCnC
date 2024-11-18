@@ -12,6 +12,7 @@ import { IREALSTATE } from '../../../interfaces/property.interface';
 import { UserService } from '../../../services/user.service';
 import { PropertyService } from '../../../services/property.service';
 import { SupabaseService } from '../../../services/supabase.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-real-estate',
@@ -116,24 +117,30 @@ export class RealEstateComponent {
 
   async onAddProperty() {
     if (this.addPropertyForm.valid && this.selectedImage) {
-      const ownerId = this.userService.user()?.id;
+      const ownerId = this.userService.user()?.userId;
       const newProperty: IREALSTATE = {
         ...this.addPropertyForm.value,
         ownerId,
       };
-      const result = await this.propertyService.createProperty(
+
+      const obs = await this.propertyService.createProperty(
         newProperty,
         this.selectedImage
       );
 
-      // if (result.error) {
-      //   Swal.fire('Error al agregar propiedad', result.error.message, 'error');
-      //   return;
-      // }
-
-      // this.propertiesSignal.update((properties) => [...properties, result]);
-      // this.toggleAddFormSignal();
-      // this.selectedImage = null;
+      obs.subscribe((res) => {
+        if (res.error) {
+          Swal.fire({
+            icon: 'error',
+            text: 'Error al crear la propiedad',
+            title: 'Upss!!',
+          });
+          return;
+        }
+        this.propertiesSignal.update((properties) => [...properties, res]);
+        this.toggleAddFormSignal();
+        this.selectedImage = null;
+      });
     }
   }
 }

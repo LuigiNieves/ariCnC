@@ -16,8 +16,7 @@ import { v4 as uuidv4 } from 'uuid';
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule]
-
+  imports: [RouterLink, ReactiveFormsModule],
 })
 export class ProfileComponent {
   userForm: FormGroup = this.fb.group({
@@ -33,13 +32,12 @@ export class ProfileComponent {
     private fb: FormBuilder,
     public supabase: SupabaseService
   ) {
-    // Inicializa el formulario con los valores actuales del signal sin modificarlo
-    const userData = this.userService.user()!; // Obtiene el valor actual del signal
+    const userData = this.userService.user()!;
 
     this.userForm.setValue({
-      username: userData.username || '',
-      bio: userData.bio || '',
-      owner: userData.isowner || false,
+      username: userData?.username || '',
+      bio: userData?.bio || '',
+      owner: userData?.isowner || false,
     });
   }
 
@@ -51,37 +49,32 @@ export class ProfileComponent {
   }
 
   async onSubmit() {
-    // if (!this.userForm.valid) {
-    //   Swal.fire({
-    //     title: 'error',
-    //     text: 'Los cambios no son validos',
-    //     icon: 'error',
-    //   });
-    //   return this.resetForm();
-    // }
-
     const { username, bio } = this.userForm.value;
     const idPhoto = uuidv4();
+
     const result = await this.userService.update({
-      id: this.userService.user()?.id,
+      userId: this.userService.user()?.userId,
       username,
       bio,
       photo: this.photo || this.userService.user()?.photo,
-      isowner: this.userForm.value.owner
+      isowner: this.userForm.value.owner,
     });
 
-    if (result) {
-      return Swal.fire({
-        icon: 'success',
-        text: 'Usuario actualizado con exito',
-        title: '¡Exitoso!',
-      });
-    }
-
-    return Swal.fire({
-      icon: 'error',
-      text: 'Nombre de usuario ya existe',
-      title: 'Upss!!',
+    result.subscribe({
+      next: () => {
+        return Swal.fire({
+          icon: 'success',
+          text: 'Usuario actualizado con exito',
+          title: '¡Exitoso!',
+        });
+      },
+      error: () => {
+        return Swal.fire({
+          icon: 'error',
+          text: 'Nombre de usuario ya existe',
+          title: 'Upss!!',
+        });
+      },
     });
   }
 

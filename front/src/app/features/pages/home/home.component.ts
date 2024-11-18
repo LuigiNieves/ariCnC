@@ -22,24 +22,12 @@ export class HomeComponent {
   filter: WritableSignal<FilterEnum> = signal(FilterEnum.ALL);
   FilterEnum = FilterEnum;
 
-  filterProperties: WritableSignal<IREALSTATE[]> = signal([]);
-  filterPropertiesT5: WritableSignal<IREALSTATE[]> = signal([]);
-
   constructor(
     public userService: UserService,
-    public propertyService: PropertyService,
-    public supabase: SupabaseService
+    public supabase: SupabaseService,
+    public propertyService: PropertyService
   ) {
     this.user = this.userService.user();
-  }
-
-  ngOnInit() {
-    this.updateProperties()
-  }
-
-  updateProperties() {
-    this.filterProperties.set([...this.propertyService.realState()!]);
-    this.filterPropertiesT5.set([...this.propertyService.realStateT5()!]);
   }
 
   setFilter(filter: FilterEnum) {
@@ -48,10 +36,7 @@ export class HomeComponent {
     //   this.updateProperties()
     //   return;
     // }
-
     // this.filter.set(filter);
-
-
     // this.filterProperties.set(filterAll);
     // this.filterPropertiesT5.set(filterT5);
   }

@@ -4,13 +4,14 @@ import { DbService } from './db.service';
 import { v4 as uuid4 } from 'uuid';
 import { SupabaseService } from './supabase.service';
 import { UserService } from './user.service';
+import { of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PropertyService {
-  realState: WritableSignal<IREALSTATE[] | null> = signal(null);
-  realStateT5: WritableSignal<IREALSTATE[] | null> = signal(null);
+  realState: WritableSignal<IREALSTATE[]> = signal([]);
+  realStateT5: WritableSignal<IREALSTATE[]> = signal([]);
 
   constructor(
     private db: DbService,
@@ -18,8 +19,9 @@ export class PropertyService {
     private userService: UserService
   ) {
     this.getAllRealState().subscribe((realState) => {
-      this.realState.update(() => realState as IREALSTATE[]);
-      this.realStateT5.update(() =>
+      console.log({ realState });
+      this.realState.set(realState as IREALSTATE[]);
+      this.realStateT5.set(
         [...(realState as IREALSTATE[])]
           .sort(() => 0.5 - Math.random())
           .slice(0, 5)
@@ -52,20 +54,19 @@ export class PropertyService {
 
       const { data, error } = await this.supabase.uploadFile(path, file);
 
-      if (error) return { error: 'Error subiendo' };
+      if (error) return of(error);
 
       property.imageUrl = data.fullPath;
-      property.id = id;
+      property.realStateId = id;
     }
 
-    const result = this.db
+    return this.db
       .createRealState(property, this.userService.user()?.userId!)
-      .subscribe((result) => {
-        console.log('property created', result);
-        this.realState.update((last) => [...last!, result as IREALSTATE]);
-      });
-
-    return result;
+      .pipe(
+        tap((result) => {
+          this.realState.update((last) => [...last!, result as IREALSTATE]);
+        })
+      );
   }
 
   getPropertyById(id: string) {
@@ -75,14 +76,17 @@ export class PropertyService {
   // Actualizar propiedad
   updateProperty(updateRealState: IREALSTATE, file: File | null) {
     if (file) {
-      this.supabase.updateFile(`realState/${updateRealState.realStateId}`, file);
+      this.supabase.updateFile(
+        `realState/${updateRealState.realStateId}`,
+        file
+      );
     }
     return this.db.updateRealState(updateRealState);
   }
 
   getUrl(propertyId: string) {
     const url = this.realState()!.find(
-      (property) => propertyId === property.id
+      (property) => propertyId === property.realStateId
     );
     return url?.imageUrl;
   }
@@ -91,14 +95,10 @@ export class PropertyService {
   deleteProperty(propertyId: string) {
     this.supabase.deleteFile(`realState/${propertyId}`);
     this.realState.update((last) =>
-      last != null
-        ? [...last].filter((r) => r.realStateId !== propertyId)
-        : null
+      [...last].filter((r) => r.realStateId !== propertyId)
     );
     this.realStateT5.update((last) =>
-      last != null
-        ? [...last].filter((r) => r.realStateId !== propertyId)
-        : null
+      [...last].filter((r) => r.realStateId !== propertyId)
     );
     return this.db.deleteProperty(propertyId).subscribe();
   }

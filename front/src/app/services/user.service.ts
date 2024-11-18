@@ -62,6 +62,9 @@ export class UserService {
   logIn(username: string, password: string) {
     return this.db.login(username, password).pipe(
       tap((res) => {
+        if (typeof res === 'string') {
+          throw new Error('Usuario o contraseña incorrectos');
+        }
         this.#isLogged.update(() => true);
         localStorage.setItem('token', res.token as any);
         this.user.update(() => res as IUSER);
@@ -100,9 +103,9 @@ export class UserService {
     if (user.photo instanceof File) {
       user.idPhoto = uuid4();
 
-      const folderName = `/users/${user.idPhoto}`;
+      const folderName = `/profile/${user.idPhoto}`;
       const { data } = await this.supabase.uploadFile(folderName, user.photo);
-      user.photo = data.fullPath;
+      user.profilePicture = data.fullPath;
     }
 
     return this.db.updateUser(user);

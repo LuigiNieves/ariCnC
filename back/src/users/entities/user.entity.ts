@@ -1,5 +1,12 @@
 import { RealState } from 'src/real-states/entities/real-state.entity';
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+} from 'typeorm';
 
 @Entity('users')
 export class User {
@@ -7,11 +14,10 @@ export class User {
   userId: string;
 
   @Column({
-    type:'varchar',
-     unique: true
-     })
+    type: 'varchar',
+    unique: true,
+  })
   username: string;
-
 
   @Column({ type: 'varchar' })
   email: string;
@@ -19,7 +25,7 @@ export class User {
   @Column()
   password: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, default: 'aircnc/profile/default.jfif' })
   profilePicture: string;
 
   @Column({ nullable: true })

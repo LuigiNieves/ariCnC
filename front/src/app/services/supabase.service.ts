@@ -103,7 +103,7 @@ export class SupabaseService {
   image(id: any) {
     const { data } = this.supabase.storage
       .from(this.bucketName)
-      .getPublicUrl(`properties/${id}`);
+      .getPublicUrl(`realState/${id}`);
     return data.publicUrl;
   }
 

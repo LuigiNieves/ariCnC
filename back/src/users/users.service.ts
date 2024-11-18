@@ -63,6 +63,10 @@ export class UsersService {
     };
   }
 
+  update(userId: string, updateUserDto: UpdateUserDto) {
+    return this.userRepository.update(userId, updateUserDto);
+  }
+
   private isNotValid(password: string, encripted: string) {
     return !bcryptjs.compareSync(password, encripted);
   }
@@ -72,7 +76,15 @@ export class UsersService {
     return this.jwtService.sign(userPayload);
   }
 
-  authenticate(token: string) {
-    return this.jwtService.decode(token);
+  async authenticate(token: string) {
+    const { userId } = this.jwtService.decode<User>(token);
+
+    const { password: _, ...user } = await this.userRepository.findOne({
+      where: {
+        userId,
+      },
+    });
+
+    return user;
   }
 }
