@@ -45,14 +45,12 @@ export class PropertyService {
 
   // Crear propiedad
   async createProperty(property: IREALSTATE, file: File) {
-    if (property.imageUrl instanceof File) {
+    if (file instanceof File) {
       const id: string = uuid4();
       console.log(id);
       const path = `realState/${id}`;
 
       const { data, error } = await this.supabase.uploadFile(path, file);
-
-      console.log(path)
 
       if (error) return { error: 'Error subiendo' };
 
@@ -75,10 +73,11 @@ export class PropertyService {
   }
 
   // Actualizar propiedad
-  updateProperty(updateRealState: IREALSTATE, file: File | null): void {
-    if (!file) return;
-    this.supabase.updateFile(`realState/${updateRealState.id}`, file);
-    this.db.updateRealState(updateRealState);
+  updateProperty(updateRealState: IREALSTATE, file: File | null) {
+    if (file) {
+      this.supabase.updateFile(`realState/${updateRealState.realStateId}`, file);
+    }
+    return this.db.updateRealState(updateRealState);
   }
 
   getUrl(propertyId: string) {
@@ -90,9 +89,18 @@ export class PropertyService {
 
   // Eliminar propiedad
   deleteProperty(propertyId: string) {
-    console.log(`realState/${propertyId}`);
     this.supabase.deleteFile(`realState/${propertyId}`);
-    return this.db.deleteProperty(propertyId);
+    this.realState.update((last) =>
+      last != null
+        ? [...last].filter((r) => r.realStateId !== propertyId)
+        : null
+    );
+    this.realStateT5.update((last) =>
+      last != null
+        ? [...last].filter((r) => r.realStateId !== propertyId)
+        : null
+    );
+    return this.db.deleteProperty(propertyId).subscribe();
   }
 
   // Obtener propiedades por el propietario

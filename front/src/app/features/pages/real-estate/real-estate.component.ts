@@ -11,6 +11,7 @@ import { FilterEnum } from '../../../enum/filter.enum';
 import { IREALSTATE } from '../../../interfaces/property.interface';
 import { UserService } from '../../../services/user.service';
 import { PropertyService } from '../../../services/property.service';
+import { SupabaseService } from '../../../services/supabase.service';
 
 @Component({
   selector: 'app-real-estate',
@@ -34,7 +35,8 @@ export class RealEstateComponent {
 
   constructor(
     private propertyService: PropertyService,
-    private userService: UserService
+    private userService: UserService,
+    public supabase: SupabaseService
   ) {
     this.addPropertyForm = this.fb.group({
       title: ['', Validators.required],
@@ -57,7 +59,6 @@ export class RealEstateComponent {
   loadProperties() {
     setTimeout(() => {
       const ownerId = this.userService.user()?.userId;
-      console.log(ownerId)
       this.propertyService
         .getRealStateByOwner(ownerId!)
         .subscribe((properties) => {
@@ -78,8 +79,20 @@ export class RealEstateComponent {
         ...this.editingProperty,
         ...this.addPropertyForm.value,
       };
-      // this.propertyService.updateProperty(updatedProperty);
-      this.loadProperties();
+
+      this.propertyService
+        .updateProperty(updatedProperty, this.selectedImage)
+        ?.subscribe(() => {
+          this.propertiesSignal.update((last) =>
+            last.map((realState) => {
+              if (realState.realStateId === updatedProperty.realStateId) {
+                return updatedProperty;
+              }
+              return realState;
+            })
+          );
+        });
+
       this.editingProperty = null;
       this.toggleEditFormSignal();
     }
@@ -88,7 +101,9 @@ export class RealEstateComponent {
   onDeleteProperty(propertyId: string) {
     if (confirm('¿Estás seguro de eliminar esta propiedad?')) {
       this.propertyService.deleteProperty(propertyId);
-      this.loadProperties();
+      this.propertiesSignal.update((last) =>
+        last.filter((propiedad) => propiedad.realStateId != propertyId)
+      );
     }
   }
 

@@ -17,7 +17,7 @@ export class RealState {
   description: string;
 
   @Column()
-  address: string;
+  location: string;
 
   // @Column('decimal')
   // latitude: number;

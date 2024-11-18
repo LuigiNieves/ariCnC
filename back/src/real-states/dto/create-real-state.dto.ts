@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsUUID, IsPositive, Min, Max, IsNotEmpty } from 'class-validator';
+import { IsString, IsNumber, IsUUID, IsPositive, Min, Max, IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateRealStateDto {
   @IsUUID()
@@ -11,7 +11,7 @@ export class CreateRealStateDto {
   description: string;
 
   @IsString()
-  address: string;
+  location: string;
 
   // @IsNumber()
   // latitude: number;
@@ -24,7 +24,7 @@ export class CreateRealStateDto {
 
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   imageUrl: string;
 
   // @IsNumber()

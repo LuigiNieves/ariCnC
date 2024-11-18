@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { CreateRealStateDto } from './dto/create-real-state.dto';
 import { UpdateRealStateDto } from './dto/update-real-state.dto';
 
@@ -23,5 +23,14 @@ export class RealStatesController {
     return this.realStatesService.findOwnerRealStates(id);
   }
 
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updateRealStateDto: UpdateRealStateDto) {
+    return this.realStatesService.update(id, updateRealStateDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.realStatesService.remove(id);
+  }
 
 }

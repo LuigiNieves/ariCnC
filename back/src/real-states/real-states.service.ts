@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { RealState } from './entities/real-state.entity';
 import { CreateRealStateDto } from './dto/create-real-state.dto';
 import { User } from 'src/users/entities/user.entity';
+import { UpdateRealStateDto } from './dto/update-real-state.dto';
 // DTO que contiene los datos del nuevo RealState
 
 @Injectable()
@@ -30,6 +31,7 @@ export class RealStatesService {
     return await this.realStateRepository.find();
   }
 
+
   async findOwnerRealStates(userId: string) {
     return await this.userRepository
       .findOne({
@@ -38,4 +40,15 @@ export class RealStatesService {
       })
       .then((user) => user.realStates);
   }
+
+  update(realStateId: string, updateRealStateDto: UpdateRealStateDto){
+    return this.realStateRepository.update(realStateId, updateRealStateDto as unknown as RealState);
+  }
+
+  remove(realStateId: string) {
+    return this.realStateRepository.delete(realStateId);  
+  }
+
+
+
 }

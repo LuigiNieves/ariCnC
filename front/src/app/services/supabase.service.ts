@@ -9,7 +9,7 @@ export class SupabaseService {
   private supabase: SupabaseClient;
   private bucketName = 'aircnc'; // Reemplaza con el nombre de tu bucket de Supabase
   public URL =
-    'https://sbxihfifqidrdzrbrwsm.supabase.co/storage/v1/object/public/';
+    'https://bhqzglefhycunbypmscl.supabase.co/storage/v1/object/public/';
 
   constructor() {
     this.supabase = createClient(
@@ -59,7 +59,7 @@ export class SupabaseService {
       const { data, error } = await this.supabase.storage
         .from(this.bucketName)
         .remove([filePath]);
-      console.log(filePath);
+      console.log({error, data})
 
       if (error) throw error;
       return { data, error: null };
@@ -101,7 +101,6 @@ export class SupabaseService {
   }
 
   image(id: any) {
-    
     const { data } = this.supabase.storage
       .from(this.bucketName)
       .getPublicUrl(`properties/${id}`);

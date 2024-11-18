@@ -13,28 +13,28 @@
   cursor: pointer;
 }
 
-.property-item {
+.realState-item {
   display: flex;
   max-width: 500px;
 }
 
-.property-image {
+.realState-image {
   width: 180px;
   aspect-ratio: 1;
   object-fit: cover;
 }
 
-.property-actions {
+.realState-actions {
   display: flex;
 }
 
-.property-list-container {
+.realState-list-container {
   display: flex;
   flex-wrap: wrap; /* Permite que las propiedades se ajusten en múltiples líneas si es necesario */
   gap: 20px; /* Espacio entre las propiedades */
 }
 
-.property-list-container div {
+.realState-list-container div {
   flex: 1 1 30%; /* Cada propiedad ocupará el 30% del ancho del contenedor */
   box-sizing: border-box;
   padding: 15px;
@@ -95,7 +95,7 @@ button.btn:hover {
   background-color: #0056b3;
 }
 
-.property-image {
+.realState-image {
   max-width: 100%;
   height: auto;
   margin: 10px 0;
@@ -120,7 +120,7 @@ button.btn:hover {
 }
 
 /* Estilos para la lista de propiedades */
-.property-list-container h3 {
+.realState-list-container h3 {
   margin-top: 20px;
 }
 

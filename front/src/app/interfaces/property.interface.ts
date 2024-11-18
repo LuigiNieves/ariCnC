@@ -1,5 +1,6 @@
 export interface IREALSTATE {
   id?: string;
+  realStateId?: string;
   title: string;
   description: string;
   price: number;

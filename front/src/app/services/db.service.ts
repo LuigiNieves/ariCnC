@@ -56,7 +56,7 @@ export class DbService {
 
   updateRealState(realState: IREALSTATE) {
     return this.http
-      .put<IREALSTATE>(`${this.url}/real-states/${realState.id}`, realState)
+      .put<IREALSTATE>(`${this.url}/real-states/${realState.realStateId}`, realState)
       .pipe(
         tap((response) => {
           return response;
@@ -109,15 +109,7 @@ export class DbService {
   }
 
   deleteProperty(id: string) {
-    const index = this.db.RealState.findIndex((property) => property.id == id);
-
-    if (index == -1) return false;
-
-    this.db.RealState.splice(index, 1);
-
-    this.updateDatabase();
-
-    return true;
+    return this.http.delete(`${this.url}/real-states/${id}`)
   }
 
   repeatedEmailOrusername(userUpdate: IUSER) {

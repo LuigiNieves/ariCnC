@@ -2,27 +2,27 @@
   <i class="fas fa-plus-circle"></i> Agregar
 </label>
 
-<div class="property-list-container">
+<div class="realState-list-container">
   @if (!addSelect() && !editSelect()) {
-  @for ( property of propertiesSignal(); track property.id) {
-  <div class="property-item">
-    <div class="property-image-container">
-      @if (property.imageUrl) {
-      <img [src]="property.imageUrl" alt="Property Image" class="property-image" />
+  @for ( realState of propertiesSignal(); track realState.realStateId) {
+  <div class="realState-item">
+    <div class="realState-image-container">
+      @if (realState.imageUrl) {
+      <img [src]="supabase.URL + realState.imageUrl" alt="Property Image" class="realState-image" />
       }
     </div>
 
-    <div class="property-info">
-      <h3>{{ property.title }}</h3>
-      <p>{{ property.description }}</p>
-      <p>Precio: {{ property.price | currency: 'USD':'symbol':'1.0-0' }}</p>
-      <p>Ubicación: {{ property.location }}</p>
+    <div class="realState-info">
+      <h3>{{ realState.title }}</h3>
+      <p>{{ realState.description }}</p>
+      <p>Precio: {{ realState.price | currency: 'USD':'symbol':'1.0-0' }}</p>
+      <p>Ubicación: {{ realState.location }}</p>
 
-      <div class="property-actions">
-        <button class="btn btn-edit" (click)="onEditProperty(property)">
+      <div class="realState-actions">
+        <button class="btn btn-edit" (click)="onEditProperty(realState)">
           <i class="fas fa-pen-square"></i>
         </button>
-        <button class="btn btn-delete" (click)="onDeleteProperty(property.id!)">
+        <button class="btn btn-delete" (click)="onDeleteProperty(realState.realStateId!)">
           <i class="fas fa-trash-alt"></i>
         </button>
       </div>
