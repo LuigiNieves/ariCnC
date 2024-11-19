@@ -8,6 +8,7 @@ import { RealEstateComponent } from './features/pages/real-estate/real-estate.co
 import { PropertyComponent } from './features/pages/property/property.component';
 import { loggedInGuard } from './guards/auth/logged-in.guard';
 import { loggedOutGuard } from './guards/auth/logged-out.guard';
+import { ReservesComponent } from './features/pages/reserves/reserves.component';
 
 export const routes: Routes = [
   {
@@ -30,8 +31,21 @@ export const routes: Routes = [
         component: ProfileComponent,
         canActivate: [loggedInGuard],
       },
-      { path: 'real-state', component: RealEstateComponent, canActivate: [loggedInGuard] },
-      { path: 'real-state/:id', component: PropertyComponent },
+      {
+        path: 'real-state',
+        component: RealEstateComponent,
+        canActivate: [loggedInGuard],
+      },
+      {
+        path: 'real-state/:id',
+        component: PropertyComponent,
+        canActivate: [loggedInGuard],
+      },
+      {
+        path: 'bookings',
+        canActivate: [loggedInGuard],
+        component: ReservesComponent,
+      },
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: '**', redirectTo: 'login', pathMatch: 'full' },
     ],

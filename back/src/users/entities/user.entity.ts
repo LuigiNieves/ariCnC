@@ -1,3 +1,4 @@
+import { Booking } from 'src/bookings/entities/booking.entity';
 import { RealState } from 'src/real-states/entities/real-state.entity';
 import {
   Entity,
@@ -42,4 +43,7 @@ export class User {
 
   @OneToMany(() => RealState, (realState) => realState.userId)
   realStates: RealState[];
+
+  @OneToMany(() => Booking, (booking) => booking.userId)
+  bookings: Booking[];
 }

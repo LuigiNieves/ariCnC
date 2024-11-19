@@ -8,14 +8,14 @@ import { JwtModule } from '@nestjs/jwt';
 @Module({
   controllers: [UsersController],
   providers: [UsersService],
-  imports:[
+  imports: [
     TypeOrmModule.forFeature([User]),
 
     JwtModule.register({
       global: true,
       secret: 'juega en la jfdkf',
-      signOptions: { expiresIn: '1h' },
+      signOptions: { expiresIn: '2d' },
     }),
-  ]
+  ],
 })
 export class UsersModule {}

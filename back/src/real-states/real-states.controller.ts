@@ -42,7 +42,6 @@ export class RealStatesController {
     return this.realStatesService.findOwnerRealStates(id);
   }
 
-
   @Put(':id')
   update(
     @Param('id') id: string,

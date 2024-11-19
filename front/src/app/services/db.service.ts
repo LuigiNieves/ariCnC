@@ -6,6 +6,7 @@ import { IREALSTATE } from '../interfaces/property.interface';
 import { dbKeys } from '../interfaces/database.interface';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, tap } from 'rxjs';
+import { IBOOKING } from '../interfaces/booking.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +23,17 @@ export class DbService {
     this.getRealState();
   }
 
+  changeStars(rating: number, bookingId: string) {
+    return this.http
+      .patch(this.url + '/bookings/rating/' + bookingId, { rating })
+      .pipe(
+        tap((response) => {
+          return response;
+        }),
+        catchError((e) => e.message)
+      );
+  }
+
   login(username: string, password: string) {
     return this.http
       .post<any>(`${this.url}/users/login`, { username, password })
@@ -33,26 +45,44 @@ export class DbService {
       );
   }
 
+  getReservations(userId: string) {
+    return this.http
+      .get<IBOOKING[]>(this.url + '/bookings/user/' + userId, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
+      .pipe(
+        tap((response) => {
+          console.log(response);
+          return response;
+        }),
+        catchError((e) => e.message)
+      );
+  }
+
   getRealState() {
-    return this.http.get<IREALSTATE[]>(this.url + '/real-states', {
-      headers: {
-        Authorization: 'Bearer '+ localStorage.getItem('token'),
-      },
-    }).pipe(
-      tap((response) => {
-        console.log(response);
-        return response;
-      }),
-      catchError((e) => e.message)
-    );
+    return this.http
+      .get<IREALSTATE[]>(this.url + '/real-states', {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
+      .pipe(
+        tap((response) => {
+          console.log(response);
+          return response;
+        }),
+        catchError((e) => e.message)
+      );
   }
 
   getRealStateByOwner(ownerId: string) {
     return this.http
       .get<IREALSTATE[]>(this.url + '/real-states/owner/' + ownerId, {
         headers: {
-          Authorization: 'Bearer '+ localStorage.getItem('token'),
-        }
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
       })
       .pipe(
         tap((response) => {
@@ -69,7 +99,7 @@ export class DbService {
         realState,
         {
           headers: {
-            Authorization: 'Bearer '+ localStorage.getItem('token'),
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
           },
         }
       )
@@ -134,5 +164,14 @@ export class DbService {
 
   updateDatabase() {
     localStorage.setItem('DB', JSON.stringify(this.db));
+  }
+
+  createBooking(booking: IBOOKING) {
+    return this.http.post(`${this.url}/bookings`, booking).pipe(
+      tap((response) => {
+        return response;
+      }),
+      catchError((e) => e.message)
+    );
   }
 }

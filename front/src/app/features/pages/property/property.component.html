@@ -1,23 +1,32 @@
+@if(this.realState){
+
 <div class="property-card">
   <div class="property-image">
-    <img [src]="this.supabase.URL + property?.imageUrl" alt="Property Image" />
+    <img [src]="this.supabase.URL + realState.imageUrl" alt="Property Image" />
   </div>
   <div class="property-details">
-    <h2 class="property-title">{{ property?.title }}</h2>
-    <p class="property-location"><i class="fas fa-map-marker-alt"></i> {{ property?.location }}</p>
-    <p class="property-description">{{ property?.description }}</p>
-
-    <!-- <div class="property-categories">
-      @for(category of property?.categories; track category){
-
-      <span class="category-tag">
-        {{ category }}
-      </span>
-      }
-    </div> -->
-
+    <h2 class="property-title">{{ realState.title }}</h2>
+    <p class="property-location"><i class="fas fa-map-marker-alt"></i> {{ realState.location }}</p>
+    <p class="property-description">{{ realState.description }}</p>
     <div class="property-price">
-      <span>{{ propertyService.formatPrice(property!.price!)}}</span>
+      <span>{{ propertyService.formatPrice(realState.price)}}</span>
     </div>
   </div>
 </div>
+
+
+<form (submit)="onSubmit($event)">
+  <div class="form-group">
+    <label for="startDate">Fecha de inicio</label>
+    <input type="date" id="startDate" name="startDate" required />
+  </div>
+
+  <div class="form-group">
+    <label for="endDate">Fecha de fin</label>
+    <input type="date" id="endDate" name="endDate" required />
+  </div>
+
+  <button class="reserve">Reservar</button>
+</form>
+
+}

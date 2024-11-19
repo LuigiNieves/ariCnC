@@ -3,9 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { RealStatesModule } from './real-states/real-states.module';
-import { PhotosModule } from './photos/photos.module';
 import { BookingsModule } from './bookings/bookings.module';
-import { ReviewsModule } from './reviews/reviews.module';
 
 
 @Module({
@@ -23,9 +21,7 @@ import { ReviewsModule } from './reviews/reviews.module';
     }),
     UsersModule,
     RealStatesModule,
-    PhotosModule,
     BookingsModule,
-    ReviewsModule,
   ],
   controllers: [],
   providers: [],

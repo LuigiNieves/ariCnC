@@ -12,7 +12,7 @@
       @if (this.userService.user()?.isowner){
       <li><a [routerLink]="['/real-state']">Gestionar propiedades</a></li>
       }@else{
-      <li><a href="#">Mis Reservas</a></li>
+      <li><a href="/bookings">Mis Reservas</a></li>
       }
 
       }

@@ -1,0 +1,7 @@
+.active {
+  fill: black !important;
+}
+
+.normal {
+  fill: gray;
+}

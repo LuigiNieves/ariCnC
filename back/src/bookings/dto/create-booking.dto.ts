@@ -1,4 +1,11 @@
-import { IsUUID, IsDateString, IsNumber, IsPositive } from 'class-validator';
+import {
+  IsUUID,
+  IsDateString,
+  IsNumber,
+  IsPositive,
+  Min,
+  Max,
+} from 'class-validator';
 
 export class CreateBookingDto {
   @IsUUID()
@@ -15,4 +22,9 @@ export class CreateBookingDto {
 
   @IsPositive()
   totalPrice: number;
+
+  @IsNumber()
+  @Min(1)
+  @Max(5)
+  rating: number;
 }

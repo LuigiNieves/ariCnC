@@ -1,5 +1,13 @@
 import { User } from 'src/users/entities/user.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+  JoinColumn,
+} from 'typeorm';
 
 @Entity('real-states')
 export class RealState {
@@ -19,23 +27,8 @@ export class RealState {
   @Column()
   location: string;
 
-  // @Column('decimal')
-  // latitude: number;
-
-  // @Column('decimal')
-  // longitude: number;
-
   @Column('decimal')
   price: number;
-
-  // @Column()
-  // numBedrooms: number;
-
-  // @Column()
-  // numBathrooms: number;
-
-  // @Column()
-  // maxGuests: number;
 
   @Column()
   imageUrl: string;

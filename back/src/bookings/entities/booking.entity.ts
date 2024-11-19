@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  CreateDateColumn,
+} from 'typeorm';
 import { RealState } from 'src/real-states/entities/real-state.entity';
 import { User } from 'src/users/entities/user.entity';
 
@@ -21,6 +27,12 @@ export class Booking {
 
   @Column('decimal')
   totalPrice: number;
+
+  @Column('int', {
+    nullable: true,
+    default: 0,
+  })
+  rating: number;
 
   @CreateDateColumn()
   createdAt: Date;

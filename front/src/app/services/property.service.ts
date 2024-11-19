@@ -5,6 +5,7 @@ import { v4 as uuid4 } from 'uuid';
 import { SupabaseService } from './supabase.service';
 import { UserService } from './user.service';
 import { of, tap } from 'rxjs';
+import { IBOOKING } from '../interfaces/booking.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +28,15 @@ export class PropertyService {
           .slice(0, 5)
       );
     });
+  }
+
+  changeStars(rating: number, reviewId: string) {
+    return this.db.changeStars(rating, reviewId);
+  }
+
+  getReservations() {
+    const userId = this.userService.user()?.userId;
+    return this.db.getReservations(userId!);
   }
 
   updateRealState(realState: IREALSTATE) {
@@ -106,5 +116,9 @@ export class PropertyService {
   // Obtener propiedades por el propietario
   getRealStateByOwner(ownerId: string) {
     return this.db.getRealStateByOwner(ownerId);
+  }
+
+  createBooking(booking: IBOOKING) {
+    return this.db.createBooking(booking);
   }
 }
