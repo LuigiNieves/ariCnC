@@ -5,6 +5,7 @@ import {
   IsPositive,
   Min,
   Max,
+  IsOptional,
 } from 'class-validator';
 
 export class CreateBookingDto {
@@ -26,5 +27,6 @@ export class CreateBookingDto {
   @IsNumber()
   @Min(1)
   @Max(5)
+  @IsOptional()
   rating: number;
 }
